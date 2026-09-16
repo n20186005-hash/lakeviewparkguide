@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-label="Lake View Park logo">
+  <rect width="240" height="240" rx="56" fill="#143844"/>
+  <circle cx="168" cy="69" r="25" fill="#e5a04c"/>
+  <path d="M28 133 79 78l42 43 27-30 64 64v25H28z" fill="#6f8f7a"/>
+  <path d="M24 157c34-17 65-17 94 0s61 17 98 0v46H24z" fill="#4f91a5"/>
+  <path d="M24 177c34-15 66-15 97 0s62 15 95 0" fill="none" stroke="#f3dfb9" stroke-width="9" stroke-linecap="round"/>
+</svg>

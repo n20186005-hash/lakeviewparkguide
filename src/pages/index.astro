@@ -1,0 +1,148 @@
+---
+import '../styles/global.css';
+
+const site = Astro.site;
+const canonical = site ? new URL(Astro.url.pathname, site).toString() : undefined;
+
+const park = {
+  name: 'لیک ویو پارک اسلام آباد',
+  alternateName: 'Lake View Park Islamabad',
+  description: 'راول جھیل کے کنارے اسلام آباد کا خاندانی تفریحی پارک—سبزہ، واک، پکنک، بچوں کی سرگرمیاں اور جھیل کے نظارے۔',
+  address: 'P47J+39P، مری روڈ، لیک ویو پارک، اسلام آباد، پاکستان',
+  latitude: 33.71494,
+  longitude: 73.13281,
+  rating: 4.2,
+  reviewCount: 96,
+};
+
+const hours = ['Mo','Tu','We','Th','Fr','Sa','Su'].map(day => ({ '@type': 'OpeningHoursSpecification', dayOfWeek: day, opens: '10:00', closes: '22:00' }));
+const attractionJson = {
+  '@context': 'https://schema.org',
+  '@type': ['TouristAttraction', 'LocalBusiness'],
+  name: park.name,
+  alternateName: park.alternateName,
+  description: park.description,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: 'P47J+39P, Murree Rd, LAKE VIEW PARK',
+    addressLocality: 'Islamabad',
+    postalCode: '49510',
+    addressCountry: 'PK'
+  },
+  geo: { '@type': 'GeoCoordinates', latitude: park.latitude, longitude: park.longitude },
+  openingHoursSpecification: hours,
+  aggregateRating: { '@type': 'AggregateRating', ratingValue: park.rating, reviewCount: park.reviewCount, bestRating: 5 },
+  ...(canonical ? { url: canonical } : {})
+};
+
+const faq = [
+  ['کیا پارک میں داخلہ فیس ہے؟', 'CDA کے فیصلے کے مطابق بنیادی پارک داخلہ مفت ہے۔ پارکنگ، رائیڈز، ایویری یا دوسری سرگرمیوں کے الگ چارجز ہو سکتے ہیں۔'],
+  ['بہترین وقت کب ہے؟', 'پرسکون ماحول کے لیے ہفتے کے دن صبح یا دوپہر سے پہلے بہتر رہتے ہیں۔ شام جھیل اور غروبِ آفتاب کے نظاروں کے لیے خوبصورت ہوتی ہے مگر ہجوم بڑھ سکتا ہے۔'],
+  ['کتنا وقت رکھنا چاہیے؟', 'عام سیر، واک اور جھیل کے نظارے کے لیے تقریباً 2–3 گھنٹے مناسب ہیں؛ بچوں کی سرگرمیوں یا پکنک کے ساتھ آدھا دن رکھیں۔'],
+  ['پارکنگ دستیاب ہے؟', 'ہاں، پارک میں گاڑیوں کے لیے پارکنگ موجود ہے۔ مصروف اختتامِ ہفتہ اور سرکاری تعطیلات میں جلد پہنچنا بہتر ہے۔'],
+  ['کیا کشتی رانی ہمیشہ دستیاب ہوتی ہے؟', 'کشتی رانی اور پانی کی سرگرمیاں انتظامی یا موسمی پابندیوں کے تابع ہو سکتی ہیں؛ خاص طور پر اسی مقصد سے جانے سے پہلے موجودہ صورتحال چیک کریں۔']
+];
+const faqJson = {
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: faq.map(([q,a]) => ({ '@type':'Question', name:q, acceptedAnswer:{ '@type':'Answer', text:a } }))
+};
+
+const hero = 'https://upload.wikimedia.org/wikipedia/commons/a/a1/Lake_View_Park_aka_Rawal_Lake_View_Point.jpg';
+const lake = 'https://upload.wikimedia.org/wikipedia/commons/e/e5/Rawal_Lake.jpg';
+const gallery = 'https://upload.wikimedia.org/wikipedia/commons/1/19/Rawal_lake_Islamabad_000.JPG';
+---
+<!doctype html>
+<html lang="ur" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{park.name} | راول جھیل، اسلام آباد</title>
+  <meta name="description" content={park.description} />
+  {canonical && <link rel="canonical" href={canonical} />}
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content={`${park.name} | راول جھیل`} />
+  <meta property="og:description" content={park.description} />
+  {canonical && <meta property="og:url" content={canonical} />}
+  <meta name="theme-color" content="#143844" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="icon" sizes="32x32" href="/favicon-32.png" />
+  <link rel="icon" sizes="16x16" href="/favicon-16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <script type="application/ld+json" set:html={JSON.stringify(attractionJson)}></script>
+  <script type="application/ld+json" set:html={JSON.stringify(faqJson)}></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HXM22WWPKP"></script>
+  <script is:inline>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-HXM22WWPKP');
+  </script>
+</head>
+<body class="paper">
+  <header class="absolute inset-x-0 top-0 z-20 px-5 py-5 text-white">
+    <div class="mx-auto flex max-w-6xl items-center justify-between rounded-full border border-white/20 bg-black/15 px-5 py-3 backdrop-blur-md">
+      <a href="#top" class="flex items-center gap-3 font-bold"><img src="/logo.svg" alt="" class="h-10 w-10" /><span>لیک ویو پارک</span></a>
+      <nav class="hidden gap-5 text-sm md:flex"><a href="#plan">سیر کا منصوبہ</a><a href="#transport">آمدورفت</a><a href="#nearby">قریب کیا ہے</a><a href="#faq">سوالات</a></nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero-photo relative min-h-[90vh] overflow-hidden text-white" style={`background-image: linear-gradient(100deg, rgba(6,24,29,.86), rgba(6,24,29,.25)), url('${hero}')`}>
+      <div class="absolute inset-0 bg-gradient-to-t from-[#102b33] via-transparent to-transparent"></div>
+      <div class="relative mx-auto flex min-h-[90vh] max-w-6xl items-end px-5 pb-16 pt-32 md:pb-24">
+        <div class="max-w-3xl">
+          <div class="mb-5 inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/10 px-4 py-2 text-sm">راول جھیل • مری روڈ • اسلام آباد</div>
+          <h1 class="section-title text-5xl font-black leading-[1.35] md:text-7xl">شہر کے کنارے،<br/><span class="text-[#f3be72]">جھیل کے ساتھ ایک سانس</span></h1>
+          <p class="mt-6 max-w-2xl text-lg leading-9 text-white/85">سبز میدان، پانی کا کھلا منظر، فیملی پکنک اور بچوں کی تفریح—لیک ویو پارک اسلام آباد کی مصروف رفتار سے چند قدم دور ایک آسان آؤٹ ڈور دن ہے۔</p>
+          <div class="mt-8 flex flex-wrap gap-3"><a href="#plan" class="rounded-full bg-[#e5a04c] px-6 py-3 font-bold text-[#17333c]">سیر کی تیاری کریں</a><a href="https://maps.app.goo.gl/6Jch5oC2zebDATyq9" class="rounded-full border border-white/35 bg-white/10 px-6 py-3" target="_blank" rel="noreferrer">گوگل میپس کھولیں</a></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="mx-auto -mt-10 grid max-w-6xl gap-4 px-5 md:grid-cols-4">
+      {[
+        ['اوقات','روزانہ عموماً 10 صبح تا 10 رات'],
+        ['داخلہ','بنیادی داخلہ مفت'],
+        ['درجہ بندی','4.2 / 5'],
+        ['مدت','2–3 گھنٹے یا آدھا دن']
+      ].map(([k,v]) => <div class="card-shadow rounded-3xl bg-white p-6"><div class="text-xs font-bold text-[#7c6c51]">{k}</div><div class="mt-2 text-lg font-black">{v}</div></div>)}
+    </section>
+
+    <section class="mx-auto grid max-w-6xl gap-10 px-5 py-20 md:grid-cols-[1.05fr_.95fr] md:items-center">
+      <div><p class="text-sm font-bold text-[#a66f2d]">راول جھیل کی فضا</p><h2 class="section-title mt-2 text-4xl font-black leading-[1.5]">یہاں اصل کشش “کرنے” سے زیادہ “ٹھہرنے” میں ہے</h2><p class="mt-5 text-lg text-slate-700">CDA کے مطابق پارک راول جھیل کے کنارے تفریح، واک، بچوں کے کھیل اور مقامی فوڈ اسٹالز کا مرکز ہے۔ کشتی رانی یا مخصوص سرگرمیوں کی دستیابی وقت اور انتظامی پابندیوں کے ساتھ بدل سکتی ہے، اس لیے انہیں یقینی سمجھ کر نہ جائیں۔</p></div>
+      <img src={lake} alt="راول جھیل کا حقیقی منظر" class="h-[420px] w-full rounded-[2rem] object-cover card-shadow" loading="lazy" />
+    </section>
+
+    <section id="plan" class="bg-[#143844] py-20 text-white">
+      <div class="mx-auto max-w-6xl px-5"><p class="text-sm font-bold text-[#f2b86d]">سیر کا منصوبہ</p><h2 class="mt-2 text-4xl font-black">جانے سے پہلے یہ جان لیں</h2><div class="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+        <article class="glass rounded-3xl border border-white/10 p-7"><h3 class="text-xl font-black">🎟️ ٹکٹ / اخراجات</h3><p class="mt-3 text-white/75">CDA کے 2023 فیصلے کے مطابق Lake View Park کے بنیادی داخلے پر انٹری فیس نہیں۔ پارکنگ، رائیڈز، فوڈ اور نجی سرگرمیاں الگ ادائیگی پر ہو سکتی ہیں۔</p></article>
+        <article class="glass rounded-3xl border border-white/10 p-7"><h3 class="text-xl font-black">🚗 پارکنگ</h3><p class="mt-3 text-white/75">پارکنگ موجود ہے اور CDA نے پارکنگ فیس کی وصولی آؤٹ سورس کرنے کی منظوری دی تھی۔ اختتامِ ہفتہ جلد پہنچنا بہتر ہے۔</p></article>
+        <article class="glass rounded-3xl border border-white/10 p-7"><h3 class="text-xl font-black">🌤️ بہترین وقت</h3><p class="mt-3 text-white/75">ہفتے کے دن نسبتاً پرسکون؛ شام روشنی اور جھیل کے منظر کے لیے عمدہ۔ گرمی میں دوپہر کے بجائے صبح یا شام کو ترجیح دیں۔</p></article>
+        <article class="glass rounded-3xl border border-white/10 p-7"><h3 class="text-xl font-black">⏱️ قیام کی مدت</h3><p class="mt-3 text-white/75">صرف واک اور جھیل کے لیے 2–3 گھنٹے؛ پکنک، بچوں کے کھیل یا متعدد سرگرمیوں کے لیے آدھا دن رکھیں۔</p></article>
+        <article class="glass rounded-3xl border border-white/10 p-7"><h3 class="text-xl font-black">👟 ساتھ کیا لائیں</h3><p class="mt-3 text-white/75">آرام دہ جوتے، پانی، دھوپ سے بچاؤ اور مچھر بھگانے والی چیز کام آ سکتی ہے۔ پکنک کے لیے چادر یا میٹ مفید ہے۔</p></article>
+        <article class="glass rounded-3xl border border-white/10 p-7"><h3 class="text-xl font-black">🛶 سرگرمیاں</h3><p class="mt-3 text-white/75">واک، پکنک، بچوں کے کھیل، فوٹوگرافی اور مختلف تفریحی زون۔ کشتی رانی/پانی کی سرگرمیاں دستیابی کے تابع ہیں۔</p></article>
+      </div></div>
+    </section>
+
+    <section id="transport" class="mx-auto max-w-6xl px-5 py-20">
+      <div class="grid gap-10 lg:grid-cols-2"><div><p class="text-sm font-bold text-[#a66f2d]">تفصیلی آمدورفت</p><h2 class="mt-2 text-4xl font-black">مری روڈ سے سیدھا جھیل کی طرف</h2><div class="mt-8 space-y-5"><div class="rounded-3xl bg-white p-6 card-shadow"><b>کار / ٹیکسی</b><p class="mt-2 text-slate-700">اسلام آباد کے مرکزی علاقوں سے مری روڈ کی سمت Rawal Dam / Lake View Park کے سائن فالو کریں۔ ایپ پر Plus Code: P47J+39P استعمال کیا جا سکتا ہے۔</p></div><div class="rounded-3xl bg-white p-6 card-shadow"><b>پبلک ٹرانسپورٹ</b><p class="mt-2 text-slate-700">CDA کے روٹ مواد میں Lake View Park باقاعدہ اسٹاپ کے طور پر شامل ہے۔ روٹ یا ٹائمنگ بدل سکتی ہے، اس لیے روانگی سے پہلے موجودہ شیڈول دیکھیں۔</p></div><div class="rounded-3xl bg-white p-6 card-shadow"><b>ہجوم سے بچنا</b><p class="mt-2 text-slate-700">جمعہ کی شام، ہفتہ، اتوار اور چھٹیوں میں داخلی سڑک اور پارکنگ مصروف ہو سکتی ہے۔ پرسکون سیر کے لیے ورک ڈے بہتر ہیں۔</p></div></div></div>
+      <div class="overflow-hidden rounded-[2rem] card-shadow"><iframe title="لیک ویو پارک کا نقشہ" class="h-[560px] w-full border-0" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=P47J%2B39P%2C%20Murree%20Rd%2C%20Lake%20View%20Park%2C%20Islamabad%2C%20Pakistan&output=embed&hl=ur"></iframe></div></div>
+    </section>
+
+    <section id="nearby" class="bg-[#ece3cf] py-20"><div class="mx-auto max-w-6xl px-5"><h2 class="text-4xl font-black">پارک کے آس پاس</h2><div class="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+      {[
+        ['🍢周边美食 · مقامی کھانا','پارک کے اندر اور آس پاس اسنیکس، چائے اور مقامی فوڈ اسٹالز ملتے ہیں۔ مکمل کھانے کے لیے مری روڈ اور قریبی شہری علاقوں کے ریستوران بہتر انتخاب ہیں۔'],
+        ['🏞️ Rawal Dam / Viewpoints','راول جھیل اور ڈیم کے مختلف ویو پوائنٹس اسی علاقے کی قدرتی توسیع ہیں؛ شام کے وقت روشنی خاص طور پر خوبصورت ہوتی ہے۔'],
+        ['🌿 Shakarparian','اسلام آباد کے کلاسک سبز مقامات میں سے ایک؛ اگر آپ آدھے دن سے زیادہ گھومنا چاہتے ہیں تو اسے Lake View Park کے ساتھ جوڑا جا سکتا ہے۔'],
+        ['🏛️ Pakistan Monument','شکرپڑیاں کے قریب قومی یادگار اور میوزیم؛ خاندانوں اور پہلی بار آنے والے سیاحوں کے لیے آسان امتزاج۔'],
+        ['🌄 Daman-e-Koh','مارگلہ ہلز سے شہر کا بلند منظر؛ لیک ویو پارک کی جھیل والی فضا کے مقابل ایک مختلف زاویہ دیتا ہے۔'],
+        ['🕌 Faisal Mosque','اسلام آباد کی نمایاں ترین عمارتوں میں سے ایک؛ جھیل، پہاڑ اور مسجد کو ایک دن کے روٹ میں رکھا جا سکتا ہے۔']
+      ].map(([t,d]) => <article class="rounded-3xl bg-[#fbf7ee] p-7"><h3 class="text-xl font-black">{t}</h3><p class="mt-3 text-slate-700">{d}</p></article>)}
+    </div></div></section>
+
+    <section class="mx-auto max-w-6xl px-5 py-20"><div class="grid gap-6 lg:grid-cols-[1.2fr_.8fr]"><img src={gallery} alt="Lake View Park viewpoint at Rawal Lake" class="h-[480px] w-full rounded-[2rem] object-cover card-shadow" loading="lazy" /><div class="rounded-[2rem] bg-[#dba15c] p-9 text-[#17333c]"><div class="text-sm font-bold">چھوٹا سا اصول</div><h2 class="mt-3 text-3xl font-black leading-[1.5]">پارک کو “رائیڈز” نہیں، جھیل کے مزاج کے ساتھ دیکھیں</h2><p class="mt-5">اگر کوئی سرگرمی بند ہو تو بھی واک، پکنک، سبزہ، پانی اور کھلی فضا یہاں کے اصل تجربے کو برقرار رکھتے ہیں۔</p><div class="mt-8 border-t border-[#17333c]/20 pt-6 text-sm">تصاویر Wikimedia Commons کے حقیقی Lake View Park / Rawal Lake فوٹوز ہیں؛ تفصیلی کریڈٹ PHOTO-CREDITS.md میں شامل ہے۔</div></div></div></section>
+
+    <section id="faq" class="bg-white py-20"><div class="mx-auto max-w-4xl px-5"><p class="text-sm font-bold text-[#a66f2d]">FAQ</p><h2 class="mt-2 text-4xl font-black">عام سوالات</h2><div class="mt-8 divide-y divide-slate-200 rounded-[2rem] border border-slate-200 px-7">{faq.map(([q,a]) => <details class="py-6"><summary class="cursor-pointer text-lg font-black">{q}</summary><p class="pt-4 text-slate-700">{a}</p></details>)}</div></div></section>
+  </main>
+
+  <footer class="bg-[#102b33] px-5 py-10 text-white/70"><div class="mx-auto flex max-w-6xl flex-col gap-4 md:flex-row md:items-center md:justify-between"><div class="flex items-center gap-3"><img src="/logo.svg" alt="" class="h-9 w-9" /><b class="text-white">لیک ویو پارک گائیڈ</b></div><p class="max-w-2xl text-sm">یہ ایک غیر سرکاری معلوماتی ویب سائٹ ہے؛ اوقات، فیس اور سرگرمیوں کی دستیابی کے لیے روانگی سے پہلے متعلقہ انتظامیہ یا تازہ مقامی معلومات کی تصدیق کریں۔</p></div></footer>
+</body>
+</html>
