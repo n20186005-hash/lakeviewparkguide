@@ -1,0 +1,20 @@
+# Files that should NOT be uploaded when deploying to Cloudflare Workers.
+# (Only the built ./dist assets are deployed; these are excluded for safety.)
+node_modules/
+src/
+.astro/
+.wrangler/
+.git/
+.env
+.env.*
+*.log
+README.md
+PHOTO-CREDITS.md
+astro.config.mjs
+tsconfig.json
+package.json
+package-lock.json
+pnpm-lock.yaml
+worker.js
+.gitignore
+.wranglerignore

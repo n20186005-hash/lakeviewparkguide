@@ -1,74 +1,142 @@
 ---
 import '../styles/global.css';
 
-const site = Astro.site;
-const canonical = site ? new URL(Astro.url.pathname, site).toString() : undefined;
+// ── Single source of truth: SEO entity binding variables ──────────────
+const DOMAIN = 'lakeviewparkguide.com';
+const SITE = `https://${DOMAIN}`;
+const canonical = new URL(Astro.url.pathname || '/', SITE).toString();
 
 const park = {
-  name: 'لیک ویو پارک اسلام آباد',
-  alternateName: 'Lake View Park Islamabad',
-  description: 'راول جھیل کے کنارے اسلام آباد کا خاندانی تفریحی پارک—سبزہ، واک، پکنک، بچوں کی سرگرمیاں اور جھیل کے نظارے۔',
-  address: 'P47J+39P، مری روڈ، لیک ویو پارک، اسلام آباد، پاکستان',
-  latitude: 33.71494,
-  longitude: 73.13281,
-  rating: 4.2,
-  reviewCount: 96,
+  fullName: 'Lake View Park',
+  shortName: 'Lake View Park',
+  city: 'Islamabad',
+  region: 'Islamabad Capital Territory',
+  country: 'Pakistan',
+  countryCode: 'PK',
+  postal: '49510',
+  plusCode: 'P47J+39P',
+  street: 'P47J+39P, Murree Rd, LAKE VIEW PARK',
+  lat: 33.71494,
+  lng: 73.13281,
+  rating: 4.5,
+  reviewCount: 14890,
+  category: '公园 · Park',
+  mapsShareUrl: 'https://maps.app.goo.gl/6Jch5oC2zebDATyq9',
+  mapsEmbed: 'https://www.google.com/maps?q=P47J%2B39P%2C%20Murree%20Rd%2C%20Lake%20View%20Park%2C%20Islamabad%2C%20Pakistan&output=embed&hl=ur',
+  govtTourismUrl: 'https://tourism.gov.pk/',
+  cdaUrl: 'https://www.cda.gov.pk/',
+  pmdUrl: 'https://www.pmd.gov.pk/',
+  ratingSync: '2026 年 9 月',
 };
 
-const hours = ['Mo','Tu','We','Th','Fr','Sa','Su'].map(day => ({ '@type': 'OpeningHoursSpecification', dayOfWeek: day, opens: '10:00', closes: '22:00' }));
+const heroImg = '/images/lake-view-park-rawal-lake.jpg';
+const lakeImg = '/images/rawal-lake-islamabad.jpg';
+const galleryImg = '/images/rawal-lake-islamabad-view.jpg';
+const heroAlt = `${park.fullName} - Main view in ${park.city}, ${park.country}`;
+
+const hours = ['Mo','Tu','We','Th','Fr','Sa','Su'].map(day => ({
+  '@type': 'OpeningHoursSpecification',
+  dayOfWeek: day,
+  opens: '10:00',
+  closes: '22:00'
+}));
+
+// Structured data — reviews are intentionally NOT included here (they live on the
+// page only, attributed to Google Maps) to avoid misrepresenting third-party ratings.
 const attractionJson = {
   '@context': 'https://schema.org',
-  '@type': ['TouristAttraction', 'LocalBusiness'],
-  name: park.name,
-  alternateName: park.alternateName,
-  description: park.description,
+  '@type': 'TouristAttraction',
+  '@id': `${SITE}/#attraction`,
+  name: park.fullName,
+  alternateName: [
+    park.shortName,
+    `${park.city} ${park.fullName}`,
+    `${park.fullName} Islamabad`,
+    'لیک ویو پارک'
+  ],
+  description: `Comprehensive visitor guide to ${park.fullName} in ${park.city}, ${park.region}, ${park.country}.`,
+  url: SITE,
+  image: [`${SITE}${heroImg}`],
+  isAccessibleForFree: true,
   address: {
     '@type': 'PostalAddress',
-    streetAddress: 'P47J+39P, Murree Rd, LAKE VIEW PARK',
-    addressLocality: 'Islamabad',
-    postalCode: '49510',
-    addressCountry: 'PK'
+    streetAddress: park.street,
+    addressLocality: park.city,
+    addressRegion: park.region,
+    postalCode: park.postal,
+    addressCountry: park.countryCode
   },
-  geo: { '@type': 'GeoCoordinates', latitude: park.latitude, longitude: park.longitude },
+  geo: { '@type': 'GeoCoordinates', latitude: park.lat, longitude: park.lng },
   openingHoursSpecification: hours,
-  aggregateRating: { '@type': 'AggregateRating', ratingValue: park.rating, reviewCount: park.reviewCount, bestRating: 5 },
-  ...(canonical ? { url: canonical } : {})
+  hasMap: park.mapsShareUrl,
+  sameAs: [park.mapsShareUrl, park.govtTourismUrl, park.cdaUrl]
 };
 
-const faq = [
+const breadcrumbJson = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { position: 1, '@type': 'ListItem', name: park.country, item: SITE + '/#' },
+    { position: 2, '@type': 'ListItem', name: park.region, item: SITE + '/#' },
+    { position: 3, '@type': 'ListItem', name: park.city, item: SITE + '/#' },
+    { position: 4, '@type': 'ListItem', name: park.fullName, item: SITE + '/#attraction' }
+  ]
+};
+
+const faqUr = [
   ['کیا پارک میں داخلہ فیس ہے؟', 'CDA کے فیصلے کے مطابق بنیادی پارک داخلہ مفت ہے۔ پارکنگ، رائیڈز، ایویری یا دوسری سرگرمیوں کے الگ چارجز ہو سکتے ہیں۔'],
   ['بہترین وقت کب ہے؟', 'پرسکون ماحول کے لیے ہفتے کے دن صبح یا دوپہر سے پہلے بہتر رہتے ہیں۔ شام جھیل اور غروبِ آفتاب کے نظاروں کے لیے خوبصورت ہوتی ہے مگر ہجوم بڑھ سکتا ہے۔'],
   ['کتنا وقت رکھنا چاہیے؟', 'عام سیر، واک اور جھیل کے نظارے کے لیے تقریباً 2–3 گھنٹے مناسب ہیں؛ بچوں کی سرگرمیوں یا پکنک کے ساتھ آدھا دن رکھیں۔'],
   ['پارکنگ دستیاب ہے؟', 'ہاں، پارک میں گاڑیوں کے لیے پارکنگ موجود ہے۔ مصروف اختتامِ ہفتہ اور سرکاری تعطیلات میں جلد پہنچنا بہتر ہے۔'],
   ['کیا کشتی رانی ہمیشہ دستیاب ہوتی ہے؟', 'کشتی رانی اور پانی کی سرگرمیاں انتظامی یا موسمی پابندیوں کے تابع ہو سکتی ہیں؛ خاص طور پر اسی مقصد سے جانے سے پہلے موجودہ صورتحال چیک کریں۔']
 ];
-const faqJson = {
-  '@context': 'https://schema.org', '@type': 'FAQPage',
-  mainEntity: faq.map(([q,a]) => ({ '@type':'Question', name:q, acceptedAnswer:{ '@type':'Answer', text:a } }))
-};
 
-const hero = 'https://upload.wikimedia.org/wikipedia/commons/a/a1/Lake_View_Park_aka_Rawal_Lake_View_Point.jpg';
-const lake = 'https://upload.wikimedia.org/wikipedia/commons/e/e5/Rawal_Lake.jpg';
-const gallery = 'https://upload.wikimedia.org/wikipedia/commons/1/19/Rawal_lake_Islamabad_000.JPG';
+const faqEn = [
+  ['Where is Lake View Park located?', `${park.fullName} sits on Murree Road in ${park.city}, ${park.region}, ${park.country}, on the shore of Rawal Lake. The Plus Code is ${park.plusCode}.`],
+  ['Is Lake View Park free to visit?', `${park.fullName} is a public park; basic entry is generally free. Parking, rides, the aviary and some activities may carry separate charges set by the managing authority (CDA).`],
+  ['What are the best times to visit?', 'Weekday mornings and early afternoons are calmer. Evenings are lovely for lake and sunset views but busier. Avoid peak weekends and public holidays if you prefer smaller crowds.'],
+  ['How do I get to Lake View Park?', 'By car or rideshare, follow Murree Road toward the Rawal Dam / Lake View Park signs; the Plus Code works in map apps. CDA bus routes serve the area—confirm current schedules before travel.'],
+  ['Is boating available all year?', 'Boating and water activities depend on management and seasonal or weather conditions; check the current status before making a special trip.'],
+  ['How much time should I plan for?', 'About 2–3 hours for a walk and lake view; allow half a day if you add a picnic, children’s activities, or nearby viewpoints.']
+];
+
+const faqJson = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [...faqUr, ...faqEn].map(([q, a]) => ({
+    '@type': 'Question',
+    name: q,
+    acceptedAnswer: { '@type': 'Answer', text: a }
+  }))
+};
 ---
+
 <!doctype html>
 <html lang="ur" dir="rtl">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>{park.name} | راول جھیل، اسلام آباد</title>
-  <meta name="description" content={park.description} />
-  {canonical && <link rel="canonical" href={canonical} />}
+  <title>Lake View Park (Islamabad) - Visitor Guide & Location · لیک ویو پارک اسلام آباد</title>
+  <meta name="description" content={`Discover ${park.fullName}, the lakeside landmark in ${park.city}, ${park.region}, ${park.country}. View the location map, transport options, live weather, nearby Rawal Lake viewpoints, and travel tips.`} />
+  <link rel="canonical" href={canonical} />
   <meta property="og:type" content="website" />
-  <meta property="og:title" content={`${park.name} | راول جھیل`} />
-  <meta property="og:description" content={park.description} />
-  {canonical && <meta property="og:url" content={canonical} />}
+  <meta property="og:title" content={`${park.fullName} - ${park.city} Travel Guide`} />
+  <meta property="og:description" content={`Official visitor guide to ${park.fullName} in ${park.city}, ${park.region}, ${park.country}.`} />
+  <meta property="og:url" content={SITE} />
+  <meta property="og:image" content={`${SITE}${heroImg}`} />
+  <meta property="og:image:alt" content={`${park.fullName} in ${park.city}`} />
+  <meta name="twitter:card" content="summary_large_image" />
   <meta name="theme-color" content="#143844" />
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-title" content="Lake View Park" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+  <link rel="icon" type="image/svg+xml" href="/logo.svg" />
   <link rel="icon" sizes="32x32" href="/favicon-32.png" />
   <link rel="icon" sizes="16x16" href="/favicon-16.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
   <script type="application/ld+json" set:html={JSON.stringify(attractionJson)}></script>
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbJson)}></script>
   <script type="application/ld+json" set:html={JSON.stringify(faqJson)}></script>
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-HXM22WWPKP"></script>
   <script is:inline>
@@ -80,37 +148,70 @@ const gallery = 'https://upload.wikimedia.org/wikipedia/commons/1/19/Rawal_lake_
   <header class="absolute inset-x-0 top-0 z-20 px-5 py-5 text-white">
     <div class="mx-auto flex max-w-6xl items-center justify-between rounded-full border border-white/20 bg-black/15 px-5 py-3 backdrop-blur-md">
       <a href="#top" class="flex items-center gap-3 font-bold"><img src="/logo.svg" alt="" class="h-10 w-10" /><span>لیک ویو پارک</span></a>
-      <nav class="hidden gap-5 text-sm md:flex"><a href="#plan">سیر کا منصوبہ</a><a href="#transport">آمدورفت</a><a href="#nearby">قریب کیا ہے</a><a href="#faq">سوالات</a></nav>
+      <nav class="hidden gap-5 text-sm md:flex">
+        <a href="#about">تعارف</a>
+        <a href="#transport">آمدورفت</a>
+        <a href="#weather">موسم</a>
+        <a href="#nearby">قریب کیا ہے</a>
+        <a href="#faq">سوالات</a>
+      </nav>
     </div>
   </header>
 
   <main id="top">
-    <section class="hero-photo relative min-h-[90vh] overflow-hidden text-white" style={`background-image: linear-gradient(100deg, rgba(6,24,29,.86), rgba(6,24,29,.25)), url('${hero}')`}>
+    <!-- HERO -->
+    <section class="hero-photo relative min-h-[90vh] overflow-hidden text-white">
+      <img src={heroImg} alt={heroAlt} class="absolute inset-0 h-full w-full object-cover" loading="eager" />
+      <div class="absolute inset-0" style="background-image: linear-gradient(100deg, rgba(6,24,29,.86), rgba(6,24,29,.25))"></div>
       <div class="absolute inset-0 bg-gradient-to-t from-[#102b33] via-transparent to-transparent"></div>
       <div class="relative mx-auto flex min-h-[90vh] max-w-6xl items-end px-5 pb-16 pt-32 md:pb-24">
         <div class="max-w-3xl">
           <div class="mb-5 inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/10 px-4 py-2 text-sm">راول جھیل • مری روڈ • اسلام آباد</div>
-          <h1 class="section-title text-5xl font-black leading-[1.35] md:text-7xl">شہر کے کنارے،<br/><span class="text-[#f3be72]">جھیل کے ساتھ ایک سانس</span></h1>
+          <h1 class="section-title text-5xl font-black leading-[1.35] md:text-7xl">لیک ویو پارک اسلام آباد<span class="mt-3 block text-2xl font-bold text-[#f3be72] md:text-3xl">Lake View Park, Islamabad</span></h1>
           <p class="mt-6 max-w-2xl text-lg leading-9 text-white/85">سبز میدان، پانی کا کھلا منظر، فیملی پکنک اور بچوں کی تفریح—لیک ویو پارک اسلام آباد کی مصروف رفتار سے چند قدم دور ایک آسان آؤٹ ڈور دن ہے۔</p>
-          <div class="mt-8 flex flex-wrap gap-3"><a href="#plan" class="rounded-full bg-[#e5a04c] px-6 py-3 font-bold text-[#17333c]">سیر کی تیاری کریں</a><a href="https://maps.app.goo.gl/6Jch5oC2zebDATyq9" class="rounded-full border border-white/35 bg-white/10 px-6 py-3" target="_blank" rel="noreferrer">گوگل میپس کھولیں</a></div>
+          <div class="mt-8 flex flex-wrap gap-3">
+            <a href="#plan" class="rounded-full bg-[#e5a04c] px-6 py-3 font-bold text-[#17333c]">سیر کی تیاری کریں</a>
+            <a href={park.mapsShareUrl} class="rounded-full border border-white/35 bg-white/10 px-6 py-3" target="_blank" rel="noopener noreferrer">گوگل میپس کھولیں ↗</a>
+          </div>
         </div>
       </div>
     </section>
 
+    <!-- QUICK STATS -->
     <section class="mx-auto -mt-10 grid max-w-6xl gap-4 px-5 md:grid-cols-4">
       {[
         ['اوقات','روزانہ عموماً 10 صبح تا 10 رات'],
         ['داخلہ','بنیادی داخلہ مفت'],
-        ['درجہ بندی','4.2 / 5'],
+        ['درجہ بندی', `${park.rating} / 5`],
         ['مدت','2–3 گھنٹے یا آدھا دن']
       ].map(([k,v]) => <div class="card-shadow rounded-3xl bg-white p-6"><div class="text-xs font-bold text-[#7c6c51]">{k}</div><div class="mt-2 text-lg font-black">{v}</div></div>)}
     </section>
 
-    <section class="mx-auto grid max-w-6xl gap-10 px-5 py-20 md:grid-cols-[1.05fr_.95fr] md:items-center">
-      <div><p class="text-sm font-bold text-[#a66f2d]">راول جھیل کی فضا</p><h2 class="section-title mt-2 text-4xl font-black leading-[1.5]">یہاں اصل کشش “کرنے” سے زیادہ “ٹھہرنے” میں ہے</h2><p class="mt-5 text-lg text-slate-700">CDA کے مطابق پارک راول جھیل کے کنارے تفریح، واک، بچوں کے کھیل اور مقامی فوڈ اسٹالز کا مرکز ہے۔ کشتی رانی یا مخصوص سرگرمیوں کی دستیابی وقت اور انتظامی پابندیوں کے ساتھ بدل سکتی ہے، اس لیے انہیں یقینی سمجھ کر نہ جائیں۔</p></div>
-      <img src={lake} alt="راول جھیل کا حقیقی منظر" class="h-[420px] w-full rounded-[2rem] object-cover card-shadow" loading="lazy" />
+    <!-- GOOGLE REVIEWS (display only — not in JSON-LD) -->
+    <section id="reviews" class="mx-auto max-w-6xl px-5 py-16">
+      <div class="rounded-[2rem] card-shadow bg-white p-8 md:p-10">
+        <div class="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+          <div>
+            <div class="flex items-center gap-3">
+              <span class="text-5xl font-black text-[#143844]">{park.rating}</span>
+              <span class="text-2xl text-amber-500">★★★★★</span>
+            </div>
+            <div class="mt-1 text-sm text-slate-500">{park.category} · {park.reviewCount.toLocaleString('en-US')} 条评价</div>
+          </div>
+          <a href={park.mapsShareUrl} target="_blank" rel="noopener noreferrer" class="rounded-full bg-[#e5a04c] px-6 py-3 font-bold text-[#17333c]">在谷歌地图查看全部评价 ↗</a>
+        </div>
+        <p class="mt-6 text-xs leading-6 text-slate-500">评分与评价数同步自谷歌地图（Google Maps）用户评价 · {park.ratingSync} · 点击查看谷歌地图全部评价↗</p>
+        <p class="mt-2 text-xs leading-6 text-slate-500">同步自 Google 地图用户评价，同步时间 {park.ratingSync}；版权归原作者与 Google 地图所有</p>
+      </div>
     </section>
 
+    <!-- URDU INTRO -->
+    <section class="mx-auto grid max-w-6xl gap-10 px-5 py-20 md:grid-cols-[1.05fr_.95fr] md:items-center">
+      <div><p class="text-sm font-bold text-[#a66f2d]">راول جھیل کی فضا</p><h2 class="section-title mt-2 text-4xl font-black leading-[1.5]">یہاں اصل کشش “کرنے” سے زیادہ “ٹھہرنے” میں ہے</h2><p class="mt-5 text-lg text-slate-700">CDA کے مطابق پارک راول جھیل کے کنارے تفریح، واک، بچوں کے کھیل اور مقامی فوڈ اسٹالز کا مرکز ہے۔ کشتی رانی یا مخصوص سرگرمیوں کی دستیابی وقت اور انتظامی پابندیوں کے ساتھ بدل سکتی ہے، اس لیے انہیں یقینی سمجھ کر نہ جائیں۔</p></div>
+      <img src={lakeImg} alt={`${park.fullName} - Rawal Lake view in ${park.city}`} class="h-[420px] w-full rounded-[2rem] object-cover card-shadow" loading="lazy" />
+    </section>
+
+    <!-- PLAN (Urdu) -->
     <section id="plan" class="bg-[#143844] py-20 text-white">
       <div class="mx-auto max-w-6xl px-5"><p class="text-sm font-bold text-[#f2b86d]">سیر کا منصوبہ</p><h2 class="mt-2 text-4xl font-black">جانے سے پہلے یہ جان لیں</h2><div class="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
         <article class="glass rounded-3xl border border-white/10 p-7"><h3 class="text-xl font-black">🎟️ ٹکٹ / اخراجات</h3><p class="mt-3 text-white/75">CDA کے 2023 فیصلے کے مطابق Lake View Park کے بنیادی داخلے پر انٹری فیس نہیں۔ پارکنگ، رائیڈز، فوڈ اور نجی سرگرمیاں الگ ادائیگی پر ہو سکتی ہیں۔</p></article>
@@ -122,11 +223,76 @@ const gallery = 'https://upload.wikimedia.org/wikipedia/commons/1/19/Rawal_lake_
       </div></div>
     </section>
 
-    <section id="transport" class="mx-auto max-w-6xl px-5 py-20">
-      <div class="grid gap-10 lg:grid-cols-2"><div><p class="text-sm font-bold text-[#a66f2d]">تفصیلی آمدورفت</p><h2 class="mt-2 text-4xl font-black">مری روڈ سے سیدھا جھیل کی طرف</h2><div class="mt-8 space-y-5"><div class="rounded-3xl bg-white p-6 card-shadow"><b>کار / ٹیکسی</b><p class="mt-2 text-slate-700">اسلام آباد کے مرکزی علاقوں سے مری روڈ کی سمت Rawal Dam / Lake View Park کے سائن فالو کریں۔ ایپ پر Plus Code: P47J+39P استعمال کیا جا سکتا ہے۔</p></div><div class="rounded-3xl bg-white p-6 card-shadow"><b>پبلک ٹرانسپورٹ</b><p class="mt-2 text-slate-700">CDA کے روٹ مواد میں Lake View Park باقاعدہ اسٹاپ کے طور پر شامل ہے۔ روٹ یا ٹائمنگ بدل سکتی ہے، اس لیے روانگی سے پہلے موجودہ شیڈول دیکھیں۔</p></div><div class="rounded-3xl bg-white p-6 card-shadow"><b>ہجوم سے بچنا</b><p class="mt-2 text-slate-700">جمعہ کی شام، ہفتہ، اتوار اور چھٹیوں میں داخلی سڑک اور پارکنگ مصروف ہو سکتی ہے۔ پرسکون سیر کے لیے ورک ڈے بہتر ہیں۔</p></div></div></div>
-      <div class="overflow-hidden rounded-[2rem] card-shadow"><iframe title="لیک ویو پارک کا نقشہ" class="h-[560px] w-full border-0" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=P47J%2B39P%2C%20Murree%20Rd%2C%20Lake%20View%20Park%2C%20Islamabad%2C%20Pakistan&output=embed&hl=ur"></iframe></div></div>
+    <!-- ABOUT (English / SEO entity binding) -->
+    <section id="about" class="en mx-auto max-w-6xl px-5 py-20">
+      <p class="text-sm font-bold text-[#a66f2d]">About</p>
+      <h2 class="mt-2 text-4xl font-black">About {park.fullName}</h2>
+      <p class="mt-5 max-w-3xl text-lg text-slate-700">
+        Welcome to <strong>{park.fullName}</strong>, widely recognized as the central <strong>{park.shortName}</strong>. Located in the heart of <strong>{park.city}</strong>, <strong>{park.region}</strong>, <strong>{park.country}</strong>, this lakeside destination serves as a primary hub for travelers visiting the Rawal Lake area.
+      </p>
+      <nav aria-label="Breadcrumb" class="mt-6 inline-flex flex-wrap items-center gap-2 rounded-full bg-[#ece3cf] px-5 py-2 text-sm text-[#5b4a2f]">
+        <span>{park.fullName}</span><span aria-hidden="true">→</span>
+        <span>{park.city}</span><span aria-hidden="true">→</span>
+        <span>{park.region}</span><span aria-hidden="true">→</span>
+        <span>{park.country}</span>
+      </nav>
+      <p class="mt-6 max-w-3xl text-slate-700">
+        When visiting <strong>{park.fullName}</strong>, visitors can easily explore surrounding landmarks and points of interest, including <strong>Rawal Dam & Rawal Lake viewpoints</strong> and <strong>Shakarparian / Pakistan Monument</strong>.
+      </p>
     </section>
 
+    <!-- TRANSPORT (English) + MAP -->
+    <section id="transport" class="en mx-auto max-w-6xl px-5 py-20">
+      <div class="grid gap-10 lg:grid-cols-2">
+        <div>
+          <p class="text-sm font-bold text-[#a66f2d]">Getting here</p>
+          <h2 class="mt-2 text-4xl font-black">Location &amp; How to Visit {park.shortName} in {park.city}</h2>
+          <div class="mt-8 space-y-5">
+            <div class="rounded-3xl bg-white p-6 card-shadow">
+              <b>✈️ From the airport</b>
+              <p class="mt-2 text-slate-700">Islamabad International Airport (ISB) is roughly 40 km northwest. A taxi or ride-hailing trip takes about 45–75 minutes via the Srinagar/Hague Road corridor and Murree Road, depending on traffic. Allow extra time at peak hours.</p>
+            </div>
+            <div class="rounded-3xl bg-white p-6 card-shadow">
+              <b>🚌 Public transport</b>
+              <p class="mt-2 text-slate-700">CDA bus routes serve the Murree Road corridor; from a nearby stop, a short taxi, rickshaw or ride-hailing leg reaches the park gate. Routes and timings change, so confirm the current schedule before you travel.</p>
+            </div>
+            <div class="rounded-3xl bg-white p-6 card-shadow">
+              <b>🚕 Taxi &amp; ride-hailing</b>
+              <p class="mt-2 text-slate-700">Ride-hailing apps and local taxis operate across {park.city}. Set the destination to “Lake View Park” or paste the Plus Code <code class="rounded bg-slate-100 px-1">{park.plusCode}</code> into your map app for the most accurate drop-off.</p>
+            </div>
+            <div class="rounded-3xl bg-white p-6 card-shadow">
+              <b>🚗 Driving &amp; parking</b>
+              <p class="mt-2 text-slate-700">Follow Murree Road toward the Rawal Dam / Lake View Park signs. On-site parking is available; it fills up on busy weekends and public holidays, so arriving earlier is easier.</p>
+            </div>
+          </div>
+          <p class="mt-8 text-sm text-slate-600">
+            For official regional tourism information, visit the
+            <a class="font-semibold text-[#a66f2d] underline" href={park.govtTourismUrl} target="_blank" rel="noopener noreferrer"> Pakistan Tourism Development Corporation portal ↗</a>.
+          </p>
+        </div>
+        <div class="overflow-hidden rounded-[2rem] card-shadow">
+          <iframe title="Lake View Park location map" class="h-[560px] w-full border-0" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src={park.mapsEmbed}></iframe>
+        </div>
+      </div>
+    </section>
+
+    <!-- WEATHER (English, live via server proxy) -->
+    <section id="weather" class="en mx-auto max-w-6xl px-5 py-20">
+      <p class="text-sm font-bold text-[#a66f2d]">Live conditions &amp; what to do about them</p>
+      <h2 class="mt-2 text-4xl font-black">Weather at {park.fullName}</h2>
+      <p class="mt-3 max-w-2xl text-slate-600">The current reading plus a seven-day outlook, turned into plain advice: what to wear, how to plan your visit, what to carry, and whether an umbrella is worth packing.</p>
+
+      <div id="weather-alerts" class="mt-8"></div>
+      <div id="weather-now" class="mt-6 rounded-[2rem] card-shadow bg-white p-8 text-slate-500">Loading current conditions…</div>
+      <div id="weather-advice" class="mt-6"></div>
+
+      <p class="mt-10 text-sm font-bold text-[#143844]">Seven-day outlook — tap a day to see its advice</p>
+      <div id="weather-days" class="mt-3 grid gap-3 md:grid-cols-4 lg:grid-cols-7"></div>
+      <p id="weather-updated" class="mt-4 text-xs text-slate-400"></p>
+      <p class="mt-2 max-w-3xl text-xs leading-6 text-slate-400">The advice above is worked out from the local forecast for this park. Rain chance is a probability, not a promise, and water activities are run by the park management—during the monsoon season also read the official warnings issued by the <a class="underline" href="https://www.pmd.gov.pk/en/" target="_blank" rel="noopener">Pakistan Meteorological Department</a> before you set out.</p>
+    </section>
+
+    <!-- NEARBY (Urdu) -->
     <section id="nearby" class="bg-[#ece3cf] py-20"><div class="mx-auto max-w-6xl px-5"><h2 class="text-4xl font-black">پارک کے آس پاس</h2><div class="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
       {[
         ['🍢周边美食 · مقامی کھانا','پارک کے اندر اور آس پاس اسنیکس، چائے اور مقامی فوڈ اسٹالز ملتے ہیں۔ مکمل کھانے کے لیے مری روڈ اور قریبی شہری علاقوں کے ریستوران بہتر انتخاب ہیں۔'],
@@ -138,11 +304,407 @@ const gallery = 'https://upload.wikimedia.org/wikipedia/commons/1/19/Rawal_lake_
       ].map(([t,d]) => <article class="rounded-3xl bg-[#fbf7ee] p-7"><h3 class="text-xl font-black">{t}</h3><p class="mt-3 text-slate-700">{d}</p></article>)}
     </div></div></section>
 
-    <section class="mx-auto max-w-6xl px-5 py-20"><div class="grid gap-6 lg:grid-cols-[1.2fr_.8fr]"><img src={gallery} alt="Lake View Park viewpoint at Rawal Lake" class="h-[480px] w-full rounded-[2rem] object-cover card-shadow" loading="lazy" /><div class="rounded-[2rem] bg-[#dba15c] p-9 text-[#17333c]"><div class="text-sm font-bold">چھوٹا سا اصول</div><h2 class="mt-3 text-3xl font-black leading-[1.5]">پارک کو “رائیڈز” نہیں، جھیل کے مزاج کے ساتھ دیکھیں</h2><p class="mt-5">اگر کوئی سرگرمی بند ہو تو بھی واک، پکنک، سبزہ، پانی اور کھلی فضا یہاں کے اصل تجربے کو برقرار رکھتے ہیں۔</p><div class="mt-8 border-t border-[#17333c]/20 pt-6 text-sm">تصاویر Wikimedia Commons کے حقیقی Lake View Park / Rawal Lake فوٹوز ہیں؛ تفصیلی کریڈٹ PHOTO-CREDITS.md میں شامل ہے۔</div></div></div></section>
+    <!-- GALLERY (Urdu) -->
+    <section class="mx-auto max-w-6xl px-5 py-20"><div class="grid gap-6 lg:grid-cols-[1.2fr_.8fr]"><img src={galleryImg} alt={`${park.fullName} viewpoint at Rawal Lake`} class="h-[480px] w-full rounded-[2rem] object-cover card-shadow" loading="lazy" /><div class="rounded-[2rem] bg-[#dba15c] p-9 text-[#17333c]"><div class="text-sm font-bold">چھوٹا سا اصول</div><h2 class="mt-3 text-3xl font-black leading-[1.5]">پارک کو “رائیڈز” نہیں، جھیل کے مزاج کے ساتھ دیکھیں</h2><p class="mt-5">اگر کوئی سرگرمی بند ہو تو بھی واک، پکنک، سبزہ، پانی اور کھلی فضا یہاں کے اصل تجربے کو برقرار رکھتے ہیں۔</p><div class="mt-8 border-t border-[#17333c]/20 pt-6 text-sm">تصاویر Wikimedia Commons کے حقیقی Lake View Park / Rawal Lake فوٹوز ہیں؛ تفصیلی کریڈٹ PHOTO-CREDITS.md میں شامل ہے۔</div></div></div></section>
 
-    <section id="faq" class="bg-white py-20"><div class="mx-auto max-w-4xl px-5"><p class="text-sm font-bold text-[#a66f2d]">FAQ</p><h2 class="mt-2 text-4xl font-black">عام سوالات</h2><div class="mt-8 divide-y divide-slate-200 rounded-[2rem] border border-slate-200 px-7">{faq.map(([q,a]) => <details class="py-6"><summary class="cursor-pointer text-lg font-black">{q}</summary><p class="pt-4 text-slate-700">{a}</p></details>)}</div></div></section>
+    <!-- LANDMARKS (English) -->
+    <section id="landmarks" class="en mx-auto max-w-6xl px-5 py-20">
+      <p class="text-sm font-bold text-[#a66f2d]">Nearby</p>
+      <h2 class="mt-2 text-4xl font-black">Landmarks &amp; Attractions Around {park.shortName}</h2>
+      <div class="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+        <article class="rounded-3xl bg-white p-7 card-shadow"><h3 class="text-xl font-black">Rawal Lake &amp; Rawal Dam</h3><p class="mt-3 text-slate-700">The park’s defining backdrop—walking paths, viewpoints and boating look out over the same reservoir that supplies much of Islamabad.</p></article>
+        <article class="rounded-3xl bg-white p-7 card-shadow"><h3 class="text-xl font-black">Shakarparian &amp; Pakistan Monument</h3><p class="mt-3 text-slate-700">A short drive away: national monument, museum and green terraces that pair naturally with a half-day outing.</p></article>
+        <article class="rounded-3xl bg-white p-7 card-shadow"><h3 class="text-xl font-black">Daman-e-Koh</h3><p class="mt-3 text-slate-700">A higher vantage point in the Margalla Hills with a different perspective of the city and hills.</p></article>
+        <article class="rounded-3xl bg-white p-7 card-shadow"><h3 class="text-xl font-black">Faisal Mosque</h3><p class="mt-3 text-slate-700">One of Islamabad’s most recognizable landmarks; easy to combine with a lake-and-hills day route.</p></article>
+        <article class="rounded-3xl bg-white p-7 card-shadow"><h3 class="text-xl font-black">Margalla Hills &amp; Trail 3/5</h3><p class="mt-3 text-slate-700">Popular hiking trails nearby for visitors who want nature walks beyond the lake shore.</p></article>
+        <article class="rounded-3xl bg-white p-7 card-shadow"><h3 class="text-xl font-black">Centaurus &amp; city malls</h3><p class="mt-3 text-slate-700">Air-conditioned retail and dining a short ride away, handy for meals, supplies or EV charging.</p></article>
+      </div>
+    </section>
+
+    <!-- HISTORY (English) -->
+    <section id="history" class="en bg-[#143844] py-20 text-white">
+      <div class="mx-auto max-w-4xl px-5">
+        <p class="text-sm font-bold text-[#f2b86d]">Background</p>
+        <h2 class="mt-2 text-4xl font-black">History &amp; Significance of {park.fullName}</h2>
+        <div class="mt-6 space-y-4 text-white/80">
+          <p>{park.fullName} (often written Lake View Park Islamabad) was developed by the Capital Development Authority (CDA) along the banks of Rawal Lake, the reservoir that feeds the capital. Its purpose was to give residents and visitors an accessible green and recreational front along the water.</p>
+          <p>Over time it grew into one of Islamabad’s most-visited family destinations, known for open lawns, lake viewpoints, children’s activities and casual food stalls. Management, entry policy and activity availability are set by the CDA and can change, so confirm current details before a special trip.</p>
+          <p>Ecologically, Rawal Lake and its shoreline are part of the capital’s urban green network, valued for birdlife and as a calm counterpoint to the city’s busy center—exactly why the park’s appeal is more about “staying” than “doing.”</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SEASONAL STRATEGY (English) -->
+    <section id="season" class="en mx-auto max-w-6xl px-5 py-20">
+      <p class="text-sm font-bold text-[#a66f2d]">When to go</p>
+      <h2 class="mt-2 text-4xl font-black">Seasonal Visiting Strategy</h2>
+      <p class="mt-3 max-w-3xl text-slate-600">The guidance below is built on long-term climate normals for the Islamabad region (Pakistan Meteorological Department) together with the lake’s seasonal water levels and bird activity. Treat it as a planning baseline, not a forecast.</p>
+      <div class="mt-8 overflow-x-auto rounded-[2rem] card-shadow bg-white">
+        <table class="w-full min-w-[720px] border-collapse text-sm">
+          <thead class="bg-[#143844] text-white">
+            <tr><th class="p-4 text-left">Season / Period</th><th class="p-4 text-left">Weather &amp; Climate</th><th class="p-4 text-left">Lake &amp; Water</th><th class="p-4 text-left">Wildlife &amp; Nature</th><th class="p-4 text-left">Visitor Tips</th></tr>
+          </thead>
+          <tbody class="divide-y divide-slate-200">
+            <tr><td class="p-4 font-bold">Spring · Feb–Apr</td><td class="p-4">Mild, 15–28°C; blooming trees, low humidity</td><td class="p-4">Pleasant shoreline; comfortable for walks</td><td class="p-4">Active birds and fresh greenery</td><td class="p-4">One of the best all-round windows; great for picnics</td></tr>
+            <tr><td class="p-4 font-bold">Summer &amp; Monsoon · May–Sep</td><td class="p-4">Hot 30–40°C; Jul–Aug monsoon showers</td><td class="p-4">Higher water after rains; occasional boating limits</td><td class="p-4">Lush but hazy; afternoon heat</td><td class="p-4">Prefer mornings/evenings; carry water and sun protection</td></tr>
+            <tr><td class="p-4 font-bold">Autumn · Oct–Nov</td><td class="p-4">Mild 18–30°C; clear, dry days</td><td class="p-4">Calm, photogenic surfaces</td><td class="p-4">Comfortable for longer walks</td><td class="p-4">Excellent for photography and family outings</td></tr>
+            <tr><td class="p-4 font-bold">Winter · Dec–Jan</td><td class="p-4">Cool 5–18°C; misty mornings possible</td><td class="p-4">Low, clear water; crisp light</td><td class="p-4">Migratory birds arrive at the lake</td><td class="p-4">Best birding season; dress warmly for early visits</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="mt-8 grid gap-5 md:grid-cols-3">
+        <article class="rounded-3xl bg-[#fbf7ee] p-7"><h3 class="text-lg font-black">Meteorology</h3><p class="mt-3 text-slate-700">Islamabad has four distinct seasons. Pre-monsoon heat and Jul–Aug rains shape the safest visiting hours; winter brings the clearest light and migratory birds.</p></article>
+        <article class="rounded-3xl bg-[#fbf7ee] p-7"><h3 class="text-lg font-black">Water &amp; Lake</h3><p class="mt-3 text-slate-700">Rawal Lake levels rise through the monsoon and recede in winter. Water activities follow management and safety conditions rather than a fixed calendar.</p></article>
+        <article class="rounded-3xl bg-[#fbf7ee] p-7"><h3 class="text-lg font-black">Wildlife</h3><p class="mt-3 text-slate-700">The shoreline is a recognized birding spot, especially in winter. Observe quietly and avoid feeding wildlife to keep the habitat healthy.</p></article>
+      </div>
+    </section>
+
+    <!-- VISITOR PLANS BY GROUP (English) -->
+    <section id="plans" class="en bg-[#ece3cf] py-20">
+      <div class="mx-auto max-w-6xl px-5">
+        <p class="text-sm font-bold text-[#a66f2d]">Tailored plans</p>
+        <h2 class="mt-2 text-4xl font-black">Visitor Plans by Group</h2>
+        <div class="mt-10 grid gap-5 md:grid-cols-3">
+          <article class="rounded-3xl bg-[#fbf7ee] p-7"><h3 class="text-xl font-black">👨‍👩‍👧 Family with kids</h3><p class="mt-3 text-slate-700">Focus on open lawns, children’s play areas and casual food stalls near the entrance. Keep the route short, shaded and close to restrooms; half a day is plenty.</p></article>
+          <article class="rounded-3xl bg-[#fbf7ee] p-7"><h3 class="text-xl font-black">📷 Photography &amp; nature</h3><p class="mt-3 text-slate-700">Arrive for soft morning or golden-hour light on the lake. Combine Rawal Lake viewpoints with Shakarparian and Daman-e-Koh for a full landscape day.</p></article>
+          <article class="rounded-3xl bg-[#fbf7ee] p-7"><h3 class="text-xl font-black">♿ Low-effort / accessible</h3><p class="mt-3 text-slate-700">Stay near the main entrances and paved lake-front paths; use the on-site parking close to facilities. A relaxed hour or two by the water works well.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <!-- RECOMMENDED ROUTES (English) -->
+    <section id="routes" class="en mx-auto max-w-6xl px-5 py-20">
+      <p class="text-sm font-bold text-[#a66f2d]">Suggested routes</p>
+      <h2 class="mt-2 text-4xl font-black">Recommended Routes</h2>
+      <div class="mt-10 grid gap-5 md:grid-cols-2">
+        <article class="rounded-3xl bg-white p-7 card-shadow"><h3 class="text-xl font-black">🌅 Half-day (3–4 h)</h3><ol class="mt-4 list-decimal space-y-2 pl-5 text-slate-700"><li>Arrive late morning, park near the main gate.</li><li>Easy lake-front walk and viewpoints.</li><li>Casual lunch at on-site food stalls.</li><li>Children’s area or a short boating look, then depart before evening rush.</li></ol></article>
+        <article class="rounded-3xl bg-white p-7 card-shadow"><h3 class="text-xl font-black">🗺️ Full-day (6–7 h)</h3><ol class="mt-4 list-decimal space-y-2 pl-5 text-slate-700"><li>Morning at Lake View Park and Rawal Lake viewpoints.</li><li>Midday drive to Shakarparian &amp; Pakistan Monument.</li><li>Lunch in central Islamabad.</li><li>Afternoon at Daman-e-Koh or Faisal Mosque, return for sunset at the lake.</li></ol></article>
+      </div>
+    </section>
+
+    <!-- SERVICES & FACILITIES (English, type-neutral) -->
+    <section id="services" class="en bg-[#143844] py-20 text-white">
+      <div class="mx-auto max-w-6xl px-5">
+        <p class="text-sm font-bold text-[#f2b86d]">Facilities</p>
+        <h2 class="mt-2 text-4xl font-black">Visitor Services &amp; Nearby Facilities</h2>
+        <p class="mt-3 max-w-3xl text-white/75">A neutral overview of what to expect. We do not endorse specific businesses—only the type of service—so you can choose what suits you.</p>
+        <div class="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+          <article class="glass rounded-3xl border border-white/10 p-7"><h3 class="text-lg font-black">🚻 Restrooms</h3><p class="mt-3 text-white/75">Public toilets are provided near the main entrances and seating areas; carry your own tissues/hand sanitizer.</p></article>
+          <article class="glass rounded-3xl border border-white/10 p-7"><h3 class="text-lg font-black">🅿️ Parking</h3><p class="mt-3 text-white/75">On-site parking is available and managed by the authority; charges may apply and it fills on busy days.</p></article>
+          <article class="glass rounded-3xl border border-white/10 p-7"><h3 class="text-lg font-black">🍽️ Food &amp; drink</h3><p class="mt-3 text-white/75">Snack stalls, tea and casual eateries operate inside and around the park; fuller restaurants sit along Murree Road.</p></article>
+          <article class="glass rounded-3xl border border-white/10 p-7"><h3 class="text-lg font-black">🛏️ Stays</h3><p class="mt-3 text-white/75">No lodging inside the park; hotels and guesthouses of all budgets are found across central Islamabad, a short drive away.</p></article>
+          <article class="glass rounded-3xl border border-white/10 p-7"><h3 class="text-lg font-black">🛒 Shops</h3><p class="mt-3 text-white/75">Small kiosks sell snacks and souvenirs near the gates; larger retail and supermarkets are in the city centers.</p></article>
+          <article class="glass rounded-3xl border border-white/10 p-7"><h3 class="text-lg font-black">⛽ Fuel &amp; charging</h3><p class="mt-3 text-white/75">Petrol stations line Murree Road; EV charging is available at select shopping malls and stations in Islamabad—plan your range ahead.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <!-- SCIENCE & RESPONSIBILITY (English) -->
+    <section id="responsibility" class="en mx-auto max-w-6xl px-5 py-20">
+      <p class="text-sm font-bold text-[#a66f2d]">Learn &amp; protect</p>
+      <h2 class="mt-2 text-4xl font-black">A Little Science, and Our Shared Responsibility</h2>
+      <div class="mt-6 grid gap-5 md:grid-cols-2">
+        <article class="rounded-3xl bg-white p-7 card-shadow"><h3 class="text-lg font-black">Why the lake matters</h3><p class="mt-3 text-slate-700">Rawal Lake is a reservoir supplying Islamabad and a green refuge for birds and residents. Its health depends on surrounding land use and visitor behavior.</p></article>
+        <article class="rounded-3xl bg-white p-7 card-shadow"><h3 class="text-lg font-black">Visitor responsibility</h3><p class="mt-3 text-slate-700">Use bins, avoid single-use plastic, stay on paths, don’t feed wildlife, and follow CDA rules. Small habits keep the shore clean for everyone.</p></article>
+        <article class="rounded-3xl bg-white p-7 card-shadow"><h3 class="text-lg font-black">Birding etiquette</h3><p class="mt-3 text-slate-700">Winter brings migratory birds. Keep distance, lower your voice, and skip flash photography so the birds aren’t disturbed.</p></article>
+        <article class="rounded-3xl bg-white p-7 card-shadow"><h3 class="text-lg font-black">Safety on the water</h3><p class="mt-3 text-slate-700">Only use managed boating when it is open, wear provided safety gear, and keep children supervised near the edge.</p></article>
+      </div>
+    </section>
+
+    <!-- FAQ (Urdu) -->
+    <section id="faq" class="bg-white py-20"><div class="mx-auto max-w-4xl px-5"><p class="text-sm font-bold text-[#a66f2d]">FAQ</p><h2 class="mt-2 text-4xl font-black">عام سوالات</h2><div class="mt-8 divide-y divide-slate-200 rounded-[2rem] border border-slate-200 px-7">{faqUr.map(([q,a]) => <details class="py-6"><summary class="cursor-pointer text-lg font-black">{q}</summary><p class="pt-4 text-slate-700">{a}</p></details>)}</div></div></section>
+
+    <!-- FAQ (English) -->
+    <section id="faq-en" class="en bg-[#f3ede0] py-20"><div class="mx-auto max-w-4xl px-5"><p class="text-sm font-bold text-[#a66f2d]">FAQ (English)</p><h2 class="mt-2 text-4xl font-black">Frequently Asked Questions</h2><div class="mt-8 divide-y divide-slate-300 rounded-[2rem] border border-slate-300 bg-white px-7">{faqEn.map(([q,a]) => <details class="py-6"><summary class="cursor-pointer text-lg font-black">{q}</summary><p class="pt-4 text-slate-700">{a}</p></details>)}</div></div></section>
+
+    <!-- SOURCES (English) -->
+    <section id="sources" class="en bg-[#102b33] py-20 text-white/80">
+      <div class="mx-auto max-w-4xl px-5">
+        <p class="text-sm font-bold text-[#f2b86d]">Sources</p>
+        <h2 class="mt-2 text-4xl font-black text-white">References &amp; Data Sources</h2>
+        <ul class="mt-8 space-y-5 text-sm">
+          <li><b class="text-white">评价 · 同步时间 {park.ratingSync}</b><br/>同步自 Google 地图用户评价，同步时间 {park.ratingSync}；版权归原作者与 Google 地图所有。<br/><a class="text-[#f2b86d] underline" href={park.mapsShareUrl} target="_blank" rel="noopener noreferrer">查看谷歌地图全部评价 ↗</a></li>
+          <li><b class="text-white">Capital Development Authority (CDA)</b> — managing authority for the park, access, parking and activity rules. <a class="text-[#f2b86d] underline" href={park.cdaUrl} target="_blank" rel="noopener noreferrer">cda.gov.pk ↗</a></li>
+          <li><b class="text-white">Pakistan Tourism Development Corporation (PTDC)</b> — national tourism portal. <a class="text-[#f2b86d] underline" href={park.govtTourismUrl} target="_blank" rel="noopener noreferrer">tourism.gov.pk ↗</a></li>
+          <li><b class="text-white">Pakistan Meteorological Department (PMD)</b> — climate normals referenced for the seasonal strategy. <a class="text-[#f2b86d] underline" href={park.pmdUrl} target="_blank" rel="noopener noreferrer">pmd.gov.pk ↗</a></li>
+          <li><b class="text-white">Wikimedia Commons</b> — photography credits (see PHOTO-CREDITS).</li>
+        </ul>
+      </div>
+    </section>
   </main>
 
   <footer class="bg-[#102b33] px-5 py-10 text-white/70"><div class="mx-auto flex max-w-6xl flex-col gap-4 md:flex-row md:items-center md:justify-between"><div class="flex items-center gap-3"><img src="/logo.svg" alt="" class="h-9 w-9" /><b class="text-white">لیک ویو پارک گائیڈ</b></div><p class="max-w-2xl text-sm">یہ ایک غیر سرکاری معلوماتی ویب سائٹ ہے؛ اوقات، فیس اور سرگرمیوں کی دستیابی کے لیے روانگی سے پہلے متعلقہ انتظامیہ یا تازہ مقامی معلومات کی تصدیق کریں۔</p></div></footer>
+
+  <script is:inline>
+    // Register the PWA service worker (progressive enhancement; harmless if unsupported).
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function () { navigator.serviceWorker.register('/sw.js').catch(function () {}); });
+    }
+
+    // Live conditions plus plain-language advice (data is served by this site's own server endpoint).
+    (function () {
+      var DATA = null, selected = 0, cards = [];
+
+      function wmo(code) {
+        if (code === 0) return { i: '☀️', t: 'Clear' };
+        if (code === 1) return { i: '🌤️', t: 'Mainly clear' };
+        if (code === 2) return { i: '⛅', t: 'Partly cloudy' };
+        if (code === 3) return { i: '☁️', t: 'Overcast' };
+        if (code === 45 || code === 48) return { i: '🌫️', t: 'Fog' };
+        if (code >= 51 && code <= 57) return { i: '🌦️', t: 'Drizzle' };
+        if (code === 61) return { i: '🌦️', t: 'Light rain' };
+        if (code === 63) return { i: '🌧️', t: 'Moderate rain' };
+        if (code === 65) return { i: '🌧️', t: 'Heavy rain' };
+        if (code === 66 || code === 67) return { i: '🌧️', t: 'Freezing rain' };
+        if (code >= 71 && code <= 77) return { i: '🌨️', t: 'Snow' };
+        if (code === 80) return { i: '🌦️', t: 'Light showers' };
+        if (code === 81) return { i: '🌧️', t: 'Showers' };
+        if (code === 82) return { i: '🌧️', t: 'Heavy showers' };
+        if (code === 85 || code === 86) return { i: '🌨️', t: 'Snow showers' };
+        if (code === 95) return { i: '⛈️', t: 'Thunderstorm' };
+        if (code >= 96) return { i: '⛈️', t: 'Thunderstorm with hail' };
+        return { i: '🌡️', t: 'Unsettled' };
+      }
+
+      // Beaufort force from km/h, so wind can be described the way people feel it.
+      function bf(kmh) {
+        var top = [1, 6, 12, 20, 29, 39, 50, 62, 75, 89, 103, 118];
+        for (var i = 0; i < top.length; i++) if (kmh < top[i]) return i;
+        return 12;
+      }
+      function uvWord(u) { return u >= 8 ? 'very high' : u >= 5 ? 'high' : u >= 3 ? 'moderate' : 'low'; }
+      function windWord(b) { return b >= 7 ? 'gale' : b >= 5 ? 'strong wind' : b >= 3 ? 'noticeable breeze' : 'light air'; }
+      function hm(iso) { var p = (iso || '').split('T')[1]; return p ? p.slice(0, 5) : ''; }
+      function dow(iso, i) {
+        if (i === 0) return 'Today';
+        if (i === 1) return 'Tomorrow';
+        var d = new Date(iso + 'T00:00');
+        return ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][d.getDay()];
+      }
+      function n0(v) { return v === null || v === undefined ? 0 : v; }
+
+      // One day of data in, only the advice whose conditions are actually met comes out.
+      function advise(o) {
+        var alerts = [], wear = [], plan = [], bring = [];
+        var pop = n0(o.pop), psum = n0(o.psum), uv = n0(o.uv);
+        // Sustained wind is what you feel all day; gusts are what makes things unsafe.
+        var bw = bf(n0(o.wind)), bg = bf(n0(o.gust));
+
+        var rain = 'none';
+        if (o.code >= 95) rain = 'thunder';
+        else if (o.code >= 51 && o.code <= 57) rain = 'drizzle';
+        else if (o.code === 61 || o.code === 80) rain = 'light';
+        else if ((o.code >= 62 && o.code <= 67) || o.code === 81 || o.code === 82) rain = 'heavy';
+        else if ((o.code >= 71 && o.code <= 77) || o.code === 85 || o.code === 86) rain = 'snow';
+
+        if (rain === 'thunder') {
+          alerts.push({ t: 'Thunderstorm in the forecast', d: 'Lightning risk: stay off the hillside, out of the water and away from isolated trees. Boating and lake activities are likely to be suspended.' });
+          wear.push('Wet and stormy—waterproof shoes and a hooded layer.');
+          plan.push('Water activities on Rawal Lake will most likely close—keep an indoor or sheltered option in mind.');
+          bring.push('A hooded rain jacket, safer than an umbrella in lightning');
+        } else if (rain === 'heavy' || psum >= 10) {
+          alerts.push({ t: 'Heavy rain in the forecast', d: 'Avoid low-lying ground, the dam spillway area and stream beds—water rises fast in a monsoon downpour.' });
+          wear.push('Wet day—waterproof shoes and quick-drying clothes.');
+          plan.push('Outdoor plans are a poor bet; boating and open-air rides are often suspended in heavy rain.');
+          bring.push('A rain jacket rather than a long umbrella');
+        } else if (pop >= 60) {
+          wear.push('Rain is likely, around ' + pop + '% chance—carry a rain layer.');
+          plan.push('Keep a sheltered alternative in mind; open-air activities are less pleasant in the wet.');
+          bring.push('Folding umbrella');
+        } else if (rain === 'light') {
+          wear.push('Showers around—paths and stone steps turn slippery, watch your footing.');
+          bring.push('Folding umbrella');
+        } else if (rain === 'drizzle') {
+          wear.push('Drizzle—surfaces get slick, take care along the lakeside path.');
+          plan.push('Drizzle rarely ruins a visit: fine for a walk, poor for distant views and photos.');
+          bring.push('Compact umbrella');
+        } else if (rain === 'snow') {
+          alerts.push({ t: 'Snow or sleet in the forecast', d: 'Surfaces turn slick; the lakeside path and any sloped ground need extra care.' });
+          plan.push('Expect a changed park: slippery paths and likely closures—keep the plan flexible.');
+          bring.push('Warm, waterproof shoes');
+        }
+
+        if (o.tmax >= 32) {
+          wear.push('Hot day, up to ' + Math.round(o.tmax) + '°C—light, breathable clothing.');
+          plan.push('Keep outdoor time short and stay out of the midday sun.');
+          bring.push('Plenty of drinking water');
+        }
+        if (uv >= 5) {
+          wear.push(uv >= 8 ? 'UV is very strong—cover up rather than bake.' : 'UV is strong—sun protection is worth it.');
+          bring.push('Sunscreen, sunglasses, a sun hat');
+        }
+        if (o.tmax <= 10) {
+          wear.push('Cold day—dress warm in layers.');
+          bring.push('Warm coat, scarf');
+        }
+        if (o.tmax - o.tmin > 8) {
+          wear.push('Big day-to-night swing, ' + Math.round(o.tmin) + '° to ' + Math.round(o.tmax) + '°C—bring an extra layer for the evening.');
+        }
+        if (n0(o.humidity) >= 75 && o.tmax >= 28) wear.push('Muggy rather than simply hot—loose fabrics feel far better.');
+
+        if (bw >= 7 || bg >= 7) {
+          alerts.push({ t: 'Strong wind, gusts to force ' + Math.max(bw, bg), d: 'Stay clear of billboards, temporary structures and the exposed lakeshore; boating on Rawal Lake is likely suspended.' });
+          wear.push('Very windy—secure layers, and leave loose accessories behind.');
+          plan.push('Open-water and exposed-viewpoint activities are likely closed.');
+        } else if (bw >= 5 || bg >= 6) {
+          wear.push('Windy—a wind-resistant layer helps.');
+          plan.push('Boating and some open-air rides may be suspended once gusts pick up.');
+          bring.push('A hat that stays on; loose, flowing clothes are a nuisance in wind');
+        }
+
+        if (o.code === 45 || o.code === 48) {
+          alerts.push({ t: 'Fog', d: 'Poor visibility—take extra care on the dam approach road, and expect no view from the viewpoint.' });
+          wear.push('Murky and damp—a light layer you can shed once it clears.');
+          plan.push('Skip the viewpoint today; there will be nothing to see.');
+          bring.push('A mask if haze bothers you');
+        }
+
+        if (o.code === 0 || o.code === 1) plan.push('Clear skies—ideal for the lake viewpoint and for sunset over the water.');
+        else if (o.code === 2 || o.code === 3) plan.push('Soft, even light: the best conditions for photos, and comfortable for a long walk.');
+
+        if (!alerts.length && rain === 'none' && pop < 60 && bw <= 4 && bg <= 5 && o.tmax >= 18 && o.tmax <= 34) {
+          plan.push('Conditions suit a boat ride and an unhurried lakeside walk.');
+        }
+
+        if (!wear.length) wear.push('Comfortable conditions—dress for the season and you will be fine.');
+        if (!plan.length) {
+          plan.push(alerts.length
+            ? 'Keep the plan flexible and check conditions locally before you go.'
+            : 'No weather constraints today—plan your visit as you like.');
+        }
+        if (!bring.length) bring.push('Nothing special; water and sun protection as usual.');
+
+        return {
+          alerts: alerts,
+          wear: wear,
+          plan: plan,
+          bring: bring,
+          umbrella: rain === 'thunder' || rain === 'heavy' || rain === 'light' || rain === 'drizzle' || pop >= 60
+        };
+      }
+
+      function dayAt(i) {
+        var d = DATA.daily;
+        return {
+          code: d.weather_code[i],
+          tmax: d.temperature_2m_max[i],
+          tmin: d.temperature_2m_min[i],
+          pop: d.precipitation_probability_max ? d.precipitation_probability_max[i] : null,
+          psum: d.precipitation_sum ? d.precipitation_sum[i] : null,
+          wind: d.wind_speed_10m_max ? d.wind_speed_10m_max[i] : null,
+          gust: d.wind_gusts_10m_max ? d.wind_gusts_10m_max[i] : null,
+          uv: d.uv_index_max ? d.uv_index_max[i] : null,
+          humidity: DATA.current ? DATA.current.relative_humidity_2m : null
+        };
+      }
+
+      function renderNow() {
+        var c = DATA.current, d = DATA.daily, k = wmo(c.weather_code);
+        var pop = d.precipitation_probability_max ? d.precipitation_probability_max[0] : null;
+        var uv = d.uv_index_max ? d.uv_index_max[0] : null;
+        var el = document.getElementById('weather-now');
+        el.className = 'mt-6 rounded-[2rem] card-shadow bg-white p-8';
+        el.innerHTML =
+          '<div class="flex flex-wrap items-center justify-between gap-6">' +
+            '<div class="flex items-center gap-5">' +
+              '<div class="text-6xl">' + k.i + '</div>' +
+              '<div><div class="text-5xl font-black text-[#143844]">' + Math.round(c.temperature_2m) + '°C</div>' +
+              '<div class="text-slate-500">' + k.t + ' · feels like ' + Math.round(c.apparent_temperature) + '°C</div></div>' +
+            '</div>' +
+            '<div class="grid grid-cols-2 gap-x-8 gap-y-2 text-sm text-slate-600">' +
+              '<div>Raining now: <b>' + (n0(c.precipitation) > 0 ? 'yes' : 'no') + '</b></div>' +
+              '<div>Chance today: <b>' + (pop === null ? '—' : pop + '%') + '</b></div>' +
+              '<div>Wind: <b>' + Math.round(c.wind_speed_10m) + ' km/h</b>' + (c.wind_gusts_10m ? ', gusts ' + Math.round(c.wind_gusts_10m) : '') + '</div>' +
+              '<div>UV today: <b>' + (uv === null ? '—' : uvWord(uv)) + '</b></div>' +
+            '</div>' +
+          '</div>';
+      }
+
+      function renderAdvice() {
+        var d = DATA.daily, o = dayAt(selected), a = advise(o), k = wmo(o.code);
+
+        var al = document.getElementById('weather-alerts');
+        al.innerHTML = a.alerts.length
+          ? '<div class="rounded-2xl border-l-4 border-[#b3261e] bg-[#fdecea] p-5">' +
+              '<p class="text-sm font-black text-[#b3261e]">⚠️ Risk alerts — ' + dow(d.time[selected], selected) + '</p>' +
+              a.alerts.map(function (x) { return '<p class="mt-2 text-sm text-[#7a1c16]"><b>' + x.t + '.</b> ' + x.d + '</p>'; }).join('') +
+            '</div>'
+          : '';
+
+        var head =
+          '<div class="flex flex-wrap items-center gap-3 rounded-2xl bg-white p-5 card-shadow">' +
+            '<p class="text-sm font-black text-[#143844]">' + dow(d.time[selected], selected) + ' · ' + k.i + ' ' + k.t + ' · ' +
+              Math.round(o.tmin) + '–' + Math.round(o.tmax) + '°C · UV ' + uvWord(n0(o.uv)) + ' · ' +
+              windWord(bf(n0(o.wind))) + (bf(n0(o.gust)) > bf(n0(o.wind)) ? ', gusts to force ' + bf(n0(o.gust)) : '') + '</p>' +
+            '<span class="rounded-full px-3 py-1 text-xs font-bold ' + (a.umbrella ? 'bg-[#143844] text-white' : 'bg-[#ece3cf] text-[#5b4a2f]') + '">' +
+              (a.umbrella ? '☂️ Take an umbrella' : '☀️ No umbrella needed') + '</span>' +
+          '</div>';
+
+        var block = function (icon, title, items) {
+          if (!items.length) return '';
+          return '<div class="rounded-2xl bg-white p-5 card-shadow">' +
+            '<p class="text-sm font-black text-[#143844]">' + icon + ' ' + title + '</p>' +
+            '<ul class="mt-2 space-y-1 text-sm text-slate-600">' +
+            items.map(function (t) { return '<li>· ' + t + '</li>'; }).join('') +
+            '</ul></div>';
+        };
+
+        document.getElementById('weather-advice').innerHTML = head +
+          '<div class="mt-4 grid gap-4 md:grid-cols-3">' +
+            block('✅', 'What to wear', a.wear) +
+            block('🗺️', 'How to plan', a.plan) +
+            block('🎒', 'What to bring', a.bring) +
+          '</div>';
+      }
+
+      function renderDays() {
+        var d = DATA.daily, wrap = document.getElementById('weather-days');
+        wrap.innerHTML = '';
+        cards = [];
+        for (var i = 0; i < d.time.length; i++) {
+          (function (i) {
+            var o = dayAt(i), a = advise(o), k = wmo(o.code);
+            var card = document.createElement('button');
+            card.type = 'button';
+            card.className = 'w-full rounded-2xl bg-white p-4 text-center card-shadow transition hover:-translate-y-0.5' +
+              (i === selected ? ' ring-2 ring-[#143844]' : '');
+            card.innerHTML =
+              '<div class="text-xs font-bold text-slate-400">' + dow(d.time[i], i) + '</div>' +
+              '<div class="my-2 text-3xl">' + k.i + '</div>' +
+              '<div class="text-sm font-black text-[#143844]">' + Math.round(o.tmax) + '° / ' + Math.round(o.tmin) + '°</div>' +
+              '<div class="mt-1 text-xs text-slate-500">💧 ' + (o.pop === null ? '—' : o.pop + '%') + '</div>' +
+              '<div class="mt-1 text-xs">' +
+                (a.alerts.length ? '<span class="font-bold text-[#b3261e]">⚠️ risk</span>' : (a.umbrella ? '☂️' : '✅')) +
+              '</div>';
+            card.addEventListener('click', function () {
+              selected = i;
+              for (var j = 0; j < cards.length; j++) {
+                if (j === i) { cards[j].classList.add('ring-2'); cards[j].classList.add('ring-[#143844]'); }
+                else { cards[j].classList.remove('ring-2'); cards[j].classList.remove('ring-[#143844]'); }
+              }
+              renderAdvice();
+            });
+            cards.push(card);
+            wrap.appendChild(card);
+          })(i);
+        }
+      }
+
+      fetch('/api/weather')
+        .then(function (r) { return r.ok ? r.json() : Promise.reject(); })
+        .then(function (data) {
+          DATA = data;
+          renderNow();
+          renderDays();
+          renderAdvice();
+          var up = document.getElementById('weather-updated');
+          if (up) up.textContent = 'Reading taken ' + hm(data.current.time) + ' · Sunrise ' + hm(data.daily.sunrise[0]) + ' · Sunset ' + hm(data.daily.sunset[0]) + ' (local park time)';
+        })
+        .catch(function () {
+          var n = document.getElementById('weather-now');
+          if (n) { n.className = 'mt-6 rounded-[2rem] card-shadow bg-white p-8 text-slate-500'; n.textContent = 'Weather information is temporarily unavailable. Please check again shortly.'; }
+        });
+    })();
+  </script>
 </body>
 </html>
