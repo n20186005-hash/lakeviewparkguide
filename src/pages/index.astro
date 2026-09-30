@@ -19,7 +19,7 @@ const park = {
   lat: 33.71494,
   lng: 73.13281,
   rating: 4.5,
-  reviewCount: 14890,
+  reviewCount: 14911,
   category: '公园 · Park',
   mapsShareUrl: 'https://maps.app.goo.gl/6Jch5oC2zebDATyq9',
   mapsEmbed: 'https://www.google.com/maps?q=P47J%2B39P%2C%20Murree%20Rd%2C%20Lake%20View%20Park%2C%20Islamabad%2C%20Pakistan&output=embed&hl=ur',
@@ -97,7 +97,12 @@ const faqEn = [
   ['What are the best times to visit?', 'Weekday mornings and early afternoons are calmer. Evenings are lovely for lake and sunset views but busier. Avoid peak weekends and public holidays if you prefer smaller crowds.'],
   ['How do I get to Lake View Park?', 'By car or rideshare, follow Murree Road toward the Rawal Dam / Lake View Park signs; the Plus Code works in map apps. CDA bus routes serve the area—confirm current schedules before travel.'],
   ['Is boating available all year?', 'Boating and water activities depend on management and seasonal or weather conditions; check the current status before making a special trip.'],
-  ['How much time should I plan for?', 'About 2–3 hours for a walk and lake view; allow half a day if you add a picnic, children’s activities, or nearby viewpoints.']
+  ['How much time should I plan for?', 'About 2–3 hours for a walk and lake view; allow half a day if you add a picnic, children’s activities, or nearby viewpoints.'],
+  ['What are the Lake View Park timings?', `${park.fullName} generally opens daily, with the most commonly listed visitor window around 10:00 in the morning to 22:00 at night. Hours are set by the managing authority (CDA) and can change by season or event, so confirm the current timings before a special trip.`],
+  ['What is the entry ticket price?', `Basic entry to ${park.fullName} is generally free for visitors. Parking, amusement rides, the aviary / bird park and some activities may carry separate charges set by the CDA. Exact rates change, so check the current fee schedule at the gate.`],
+  ['Can I bring outside food?', 'Many visitors bring their own snacks and picnic items for the lawns. On-site food stalls and tea shops also operate inside and around the park. Follow CDA rules and use the bins to keep the lawns clean.'],
+  ['Is there a bird park or aviary?', `${park.fullName} is known for its aviary / bird park and is a recognized spot for waterbirds around Rawal Lake, especially in winter. Availability of the aviary and any entry charge follow the managing authority’s current policy.`],
+  ['What are the main attractions?', 'Highlights include the open lakefront and viewpoints over Rawal Lake, boating when available, children’s play areas, green lawns for picnics, the aviary / bird park, and casual food stalls — a full family-outing list is in the park directory below.']
 ];
 
 const faqJson = {
@@ -112,16 +117,18 @@ const faqJson = {
 ---
 
 <!doctype html>
-<html lang="ur" dir="rtl">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Lake View Park (Islamabad) - Visitor Guide & Location · لیک ویو پارک اسلام آباد</title>
-  <meta name="description" content={`Discover ${park.fullName}, the lakeside landmark in ${park.city}, ${park.region}, ${park.country}. View the location map, transport options, live weather, nearby Rawal Lake viewpoints, and travel tips.`} />
+  <title>Lake View Park Islamabad Guide | Timings, Ticket Price &amp; Top Attractions</title>
+  <meta name="description" content={`Plan your visit to ${park.fullName} (Rawal Lake) in ${park.city}, ${park.country}. Find opening timings, entry ticket price, boating, the bird & aviary park, family attractions, directions via Murree Road and live weather.`} />
   <link rel="canonical" href={canonical} />
   <meta property="og:type" content="website" />
-  <meta property="og:title" content={`${park.fullName} - ${park.city} Travel Guide`} />
-  <meta property="og:description" content={`Official visitor guide to ${park.fullName} in ${park.city}, ${park.region}, ${park.country}.`} />
+  <meta property="og:title" content={`${park.fullName} Islamabad Guide — Timings, Ticket Price & Attractions`} />
+  <meta property="og:description" content={`Visitor guide to ${park.fullName} (Rawal Lake), ${park.city}: timings, ticket price, boating, bird park, facilities and directions.`} />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:locale:alternate" content="ur_PK" />
   <meta property="og:url" content={SITE} />
   <meta property="og:image" content={`${SITE}${heroImg}`} />
   <meta property="og:image:alt" content={`${park.fullName} in ${park.city}`} />
@@ -167,8 +174,8 @@ const faqJson = {
       <div class="relative mx-auto flex min-h-[90vh] max-w-6xl items-end px-5 pb-16 pt-32 md:pb-24">
         <div class="max-w-3xl">
           <div class="mb-5 inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/10 px-4 py-2 text-sm">راول جھیل • مری روڈ • اسلام آباد</div>
-          <h1 class="section-title text-5xl font-black leading-[1.35] md:text-7xl">لیک ویو پارک اسلام آباد<span class="mt-3 block text-2xl font-bold text-[#f3be72] md:text-3xl">Lake View Park, Islamabad</span></h1>
-          <p class="mt-6 max-w-2xl text-lg leading-9 text-white/85">سبز میدان، پانی کا کھلا منظر، فیملی پکنک اور بچوں کی تفریح—لیک ویو پارک اسلام آباد کی مصروف رفتار سے چند قدم دور ایک آسان آؤٹ ڈور دن ہے۔</p>
+          <h1 class="section-title text-5xl font-black leading-[1.1] md:text-7xl">Lake View Park, Islamabad<span class="mt-3 block text-2xl font-bold text-[#f3be72] md:text-3xl">لیک ویو پارک اسلام آباد · Rawal Lake</span></h1>
+          <p class="mt-6 max-w-2xl text-lg leading-9 text-white/85">Green lawns, an open lakefront, family picnics and children's rides — Lake View Park is an easy outdoor day just minutes from Islamabad's busy centre. Check the timings, ticket price and boating schedule before you go.</p>
           <div class="mt-8 flex flex-wrap gap-3">
             <a href="#plan" class="rounded-full bg-[#e5a04c] px-6 py-3 font-bold text-[#17333c]">سیر کی تیاری کریں</a>
             <a href={park.mapsShareUrl} class="rounded-full border border-white/35 bg-white/10 px-6 py-3" target="_blank" rel="noopener noreferrer">گوگل میپس کھولیں ↗</a>
@@ -207,7 +214,7 @@ const faqJson = {
 
     <!-- URDU INTRO -->
     <section class="mx-auto grid max-w-6xl gap-10 px-5 py-20 md:grid-cols-[1.05fr_.95fr] md:items-center">
-      <div><p class="text-sm font-bold text-[#a66f2d]">راول جھیل کی فضا</p><h2 class="section-title mt-2 text-4xl font-black leading-[1.5]">یہاں اصل کشش “کرنے” سے زیادہ “ٹھہرنے” میں ہے</h2><p class="mt-5 text-lg text-slate-700">CDA کے مطابق پارک راول جھیل کے کنارے تفریح، واک، بچوں کے کھیل اور مقامی فوڈ اسٹالز کا مرکز ہے۔ کشتی رانی یا مخصوص سرگرمیوں کی دستیابی وقت اور انتظامی پابندیوں کے ساتھ بدل سکتی ہے، اس لیے انہیں یقینی سمجھ کر نہ جائیں۔</p></div>
+      <div><p class="text-sm font-bold text-[#a66f2d]">راول جھیل کی فضا</p><h2 class="section-title mt-2 text-4xl font-black leading-[1.5]">یہاں اصل کشش "کرنے" سے زیادہ "ٹھہرنے" میں ہے</h2><p class="mt-5 text-lg text-slate-700">CDA کے مطابق پارک راول جھیل کے کنارے تفریح، واک، بچوں کے کھیل اور مقامی فوڈ اسٹالز کا مرکز ہے۔ کشتی رانی یا مخصوص سرگرمیوں کی دستیابی وقت اور انتظامی پابندیوں کے ساتھ بدل سکتی ہے، اس لیے انہیں یقینی سمجھ کر نہ جائیں۔</p></div>
       <img src={lakeImg} alt={`${park.fullName} - Rawal Lake view in ${park.city}`} class="h-[420px] w-full rounded-[2rem] object-cover card-shadow" loading="lazy" />
     </section>
 
@@ -258,7 +265,7 @@ const faqJson = {
             </div>
             <div class="rounded-3xl bg-white p-6 card-shadow">
               <b>🚕 Taxi &amp; ride-hailing</b>
-              <p class="mt-2 text-slate-700">Ride-hailing apps and local taxis operate across {park.city}. Set the destination to “Lake View Park” or paste the Plus Code <code class="rounded bg-slate-100 px-1">{park.plusCode}</code> into your map app for the most accurate drop-off.</p>
+              <p class="mt-2 text-slate-700">Ride-hailing apps and local taxis operate across {park.city}. Set the destination to "Lake View Park" or paste the Plus Code <code class="rounded bg-slate-100 px-1">{park.plusCode}</code> into your map app for the most accurate drop-off.</p>
             </div>
             <div class="rounded-3xl bg-white p-6 card-shadow">
               <b>🚗 Driving &amp; parking</b>
@@ -305,17 +312,17 @@ const faqJson = {
     </div></div></section>
 
     <!-- GALLERY (Urdu) -->
-    <section class="mx-auto max-w-6xl px-5 py-20"><div class="grid gap-6 lg:grid-cols-[1.2fr_.8fr]"><img src={galleryImg} alt={`${park.fullName} viewpoint at Rawal Lake`} class="h-[480px] w-full rounded-[2rem] object-cover card-shadow" loading="lazy" /><div class="rounded-[2rem] bg-[#dba15c] p-9 text-[#17333c]"><div class="text-sm font-bold">چھوٹا سا اصول</div><h2 class="mt-3 text-3xl font-black leading-[1.5]">پارک کو “رائیڈز” نہیں، جھیل کے مزاج کے ساتھ دیکھیں</h2><p class="mt-5">اگر کوئی سرگرمی بند ہو تو بھی واک، پکنک، سبزہ، پانی اور کھلی فضا یہاں کے اصل تجربے کو برقرار رکھتے ہیں۔</p><div class="mt-8 border-t border-[#17333c]/20 pt-6 text-sm">تصاویر Wikimedia Commons کے حقیقی Lake View Park / Rawal Lake فوٹوز ہیں؛ تفصیلی کریڈٹ PHOTO-CREDITS.md میں شامل ہے۔</div></div></div></section>
+    <section class="mx-auto max-w-6xl px-5 py-20"><div class="grid gap-6 lg:grid-cols-[1.2fr_.8fr]"><img src={galleryImg} alt={`${park.fullName} viewpoint at Rawal Lake`} class="h-[480px] w-full rounded-[2rem] object-cover card-shadow" loading="lazy" /><div class="rounded-[2rem] bg-[#dba15c] p-9 text-[#17333c]"><div class="text-sm font-bold">چھوٹا سا اصول</div><h2 class="mt-3 text-3xl font-black leading-[1.5]">پارک کو "رائیڈز" نہیں، جھیل کے مزاج کے ساتھ دیکھیں</h2><p class="mt-5">اگر کوئی سرگرمی بند ہو تو بھی واک، پکنک، سبزہ، پانی اور کھلی فضا یہاں کے اصل تجربے کو برقرار رکھتے ہیں۔</p><div class="mt-8 border-t border-[#17333c]/20 pt-6 text-sm">تصاویر Wikimedia Commons کے حقیقی Lake View Park / Rawal Lake فوٹوز ہیں؛ تفصیلی کریڈٹ PHOTO-CREDITS.md میں شامل ہے۔</div></div></div></section>
 
     <!-- LANDMARKS (English) -->
     <section id="landmarks" class="en mx-auto max-w-6xl px-5 py-20">
       <p class="text-sm font-bold text-[#a66f2d]">Nearby</p>
       <h2 class="mt-2 text-4xl font-black">Landmarks &amp; Attractions Around {park.shortName}</h2>
       <div class="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-        <article class="rounded-3xl bg-white p-7 card-shadow"><h3 class="text-xl font-black">Rawal Lake &amp; Rawal Dam</h3><p class="mt-3 text-slate-700">The park’s defining backdrop—walking paths, viewpoints and boating look out over the same reservoir that supplies much of Islamabad.</p></article>
+        <article class="rounded-3xl bg-white p-7 card-shadow"><h3 class="text-xl font-black">Rawal Lake &amp; Rawal Dam</h3><p class="mt-3 text-slate-700">The park's defining backdrop—walking paths, viewpoints and boating look out over the same reservoir that supplies much of Islamabad.</p></article>
         <article class="rounded-3xl bg-white p-7 card-shadow"><h3 class="text-xl font-black">Shakarparian &amp; Pakistan Monument</h3><p class="mt-3 text-slate-700">A short drive away: national monument, museum and green terraces that pair naturally with a half-day outing.</p></article>
         <article class="rounded-3xl bg-white p-7 card-shadow"><h3 class="text-xl font-black">Daman-e-Koh</h3><p class="mt-3 text-slate-700">A higher vantage point in the Margalla Hills with a different perspective of the city and hills.</p></article>
-        <article class="rounded-3xl bg-white p-7 card-shadow"><h3 class="text-xl font-black">Faisal Mosque</h3><p class="mt-3 text-slate-700">One of Islamabad’s most recognizable landmarks; easy to combine with a lake-and-hills day route.</p></article>
+        <article class="rounded-3xl bg-white p-7 card-shadow"><h3 class="text-xl font-black">Faisal Mosque</h3><p class="mt-3 text-slate-700">One of Islamabad's most recognizable landmarks; easy to combine with a lake-and-hills day route.</p></article>
         <article class="rounded-3xl bg-white p-7 card-shadow"><h3 class="text-xl font-black">Margalla Hills &amp; Trail 3/5</h3><p class="mt-3 text-slate-700">Popular hiking trails nearby for visitors who want nature walks beyond the lake shore.</p></article>
         <article class="rounded-3xl bg-white p-7 card-shadow"><h3 class="text-xl font-black">Centaurus &amp; city malls</h3><p class="mt-3 text-slate-700">Air-conditioned retail and dining a short ride away, handy for meals, supplies or EV charging.</p></article>
       </div>
@@ -328,8 +335,8 @@ const faqJson = {
         <h2 class="mt-2 text-4xl font-black">History &amp; Significance of {park.fullName}</h2>
         <div class="mt-6 space-y-4 text-white/80">
           <p>{park.fullName} (often written Lake View Park Islamabad) was developed by the Capital Development Authority (CDA) along the banks of Rawal Lake, the reservoir that feeds the capital. Its purpose was to give residents and visitors an accessible green and recreational front along the water.</p>
-          <p>Over time it grew into one of Islamabad’s most-visited family destinations, known for open lawns, lake viewpoints, children’s activities and casual food stalls. Management, entry policy and activity availability are set by the CDA and can change, so confirm current details before a special trip.</p>
-          <p>Ecologically, Rawal Lake and its shoreline are part of the capital’s urban green network, valued for birdlife and as a calm counterpoint to the city’s busy center—exactly why the park’s appeal is more about “staying” than “doing.”</p>
+          <p>Over time it grew into one of Islamabad's most-visited family destinations, known for open lawns, lake viewpoints, children's activities and casual food stalls. Management, entry policy and activity availability are set by the CDA and can change, so confirm current details before a special trip.</p>
+          <p>Ecologically, Rawal Lake and its shoreline are part of the capital's urban green network, valued for birdlife and as a calm counterpoint to the city's busy center—exactly why the park's appeal is more about "staying" than "doing."</p>
         </div>
       </div>
     </section>
@@ -338,7 +345,7 @@ const faqJson = {
     <section id="season" class="en mx-auto max-w-6xl px-5 py-20">
       <p class="text-sm font-bold text-[#a66f2d]">When to go</p>
       <h2 class="mt-2 text-4xl font-black">Seasonal Visiting Strategy</h2>
-      <p class="mt-3 max-w-3xl text-slate-600">The guidance below is built on long-term climate normals for the Islamabad region (Pakistan Meteorological Department) together with the lake’s seasonal water levels and bird activity. Treat it as a planning baseline, not a forecast.</p>
+      <p class="mt-3 max-w-3xl text-slate-600">The guidance below is built on long-term climate normals for the Islamabad region (Pakistan Meteorological Department) together with the lake's seasonal water levels and bird activity. Treat it as a planning baseline, not a forecast.</p>
       <div class="mt-8 overflow-x-auto rounded-[2rem] card-shadow bg-white">
         <table class="w-full min-w-[720px] border-collapse text-sm">
           <thead class="bg-[#143844] text-white">
@@ -365,7 +372,7 @@ const faqJson = {
         <p class="text-sm font-bold text-[#a66f2d]">Tailored plans</p>
         <h2 class="mt-2 text-4xl font-black">Visitor Plans by Group</h2>
         <div class="mt-10 grid gap-5 md:grid-cols-3">
-          <article class="rounded-3xl bg-[#fbf7ee] p-7"><h3 class="text-xl font-black">👨‍👩‍👧 Family with kids</h3><p class="mt-3 text-slate-700">Focus on open lawns, children’s play areas and casual food stalls near the entrance. Keep the route short, shaded and close to restrooms; half a day is plenty.</p></article>
+          <article class="rounded-3xl bg-[#fbf7ee] p-7"><h3 class="text-xl font-black">👨‍👩‍👧 Family with kids</h3><p class="mt-3 text-slate-700">Focus on open lawns, children's play areas and casual food stalls near the entrance. Keep the route short, shaded and close to restrooms; half a day is plenty.</p></article>
           <article class="rounded-3xl bg-[#fbf7ee] p-7"><h3 class="text-xl font-black">📷 Photography &amp; nature</h3><p class="mt-3 text-slate-700">Arrive for soft morning or golden-hour light on the lake. Combine Rawal Lake viewpoints with Shakarparian and Daman-e-Koh for a full landscape day.</p></article>
           <article class="rounded-3xl bg-[#fbf7ee] p-7"><h3 class="text-xl font-black">♿ Low-effort / accessible</h3><p class="mt-3 text-slate-700">Stay near the main entrances and paved lake-front paths; use the on-site parking close to facilities. A relaxed hour or two by the water works well.</p></article>
         </div>
@@ -377,7 +384,7 @@ const faqJson = {
       <p class="text-sm font-bold text-[#a66f2d]">Suggested routes</p>
       <h2 class="mt-2 text-4xl font-black">Recommended Routes</h2>
       <div class="mt-10 grid gap-5 md:grid-cols-2">
-        <article class="rounded-3xl bg-white p-7 card-shadow"><h3 class="text-xl font-black">🌅 Half-day (3–4 h)</h3><ol class="mt-4 list-decimal space-y-2 pl-5 text-slate-700"><li>Arrive late morning, park near the main gate.</li><li>Easy lake-front walk and viewpoints.</li><li>Casual lunch at on-site food stalls.</li><li>Children’s area or a short boating look, then depart before evening rush.</li></ol></article>
+        <article class="rounded-3xl bg-white p-7 card-shadow"><h3 class="text-xl font-black">🌅 Half-day (3–4 h)</h3><ol class="mt-4 list-decimal space-y-2 pl-5 text-slate-700"><li>Arrive late morning, park near the main gate.</li><li>Easy lake-front walk and viewpoints.</li><li>Casual lunch at on-site food stalls.</li><li>Children's area or a short boating look, then depart before evening rush.</li></ol></article>
         <article class="rounded-3xl bg-white p-7 card-shadow"><h3 class="text-xl font-black">🗺️ Full-day (6–7 h)</h3><ol class="mt-4 list-decimal space-y-2 pl-5 text-slate-700"><li>Morning at Lake View Park and Rawal Lake viewpoints.</li><li>Midday drive to Shakarparian &amp; Pakistan Monument.</li><li>Lunch in central Islamabad.</li><li>Afternoon at Daman-e-Koh or Faisal Mosque, return for sunset at the lake.</li></ol></article>
       </div>
     </section>
@@ -385,9 +392,9 @@ const faqJson = {
     <!-- SERVICES & FACILITIES (English, type-neutral) -->
     <section id="services" class="en bg-[#143844] py-20 text-white">
       <div class="mx-auto max-w-6xl px-5">
-        <p class="text-sm font-bold text-[#f2b86d]">Facilities</p>
-        <h2 class="mt-2 text-4xl font-black">Visitor Services &amp; Nearby Facilities</h2>
-        <p class="mt-3 max-w-3xl text-white/75">A neutral overview of what to expect. We do not endorse specific businesses—only the type of service—so you can choose what suits you.</p>
+        <p class="text-sm font-bold text-[#f2b86d]">Park directory</p>
+        <h2 class="mt-2 text-4xl font-black">Lake View Park Directory &amp; Facilities</h2>
+        <p class="mt-3 max-w-3xl text-white/75">A neutral overview of what you'll find inside the park and nearby—our directory of services by type, not a list of specific vendors, so you can plan what suits your visit.</p>
         <div class="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
           <article class="glass rounded-3xl border border-white/10 p-7"><h3 class="text-lg font-black">🚻 Restrooms</h3><p class="mt-3 text-white/75">Public toilets are provided near the main entrances and seating areas; carry your own tissues/hand sanitizer.</p></article>
           <article class="glass rounded-3xl border border-white/10 p-7"><h3 class="text-lg font-black">🅿️ Parking</h3><p class="mt-3 text-white/75">On-site parking is available and managed by the authority; charges may apply and it fills on busy days.</p></article>
@@ -405,8 +412,8 @@ const faqJson = {
       <h2 class="mt-2 text-4xl font-black">A Little Science, and Our Shared Responsibility</h2>
       <div class="mt-6 grid gap-5 md:grid-cols-2">
         <article class="rounded-3xl bg-white p-7 card-shadow"><h3 class="text-lg font-black">Why the lake matters</h3><p class="mt-3 text-slate-700">Rawal Lake is a reservoir supplying Islamabad and a green refuge for birds and residents. Its health depends on surrounding land use and visitor behavior.</p></article>
-        <article class="rounded-3xl bg-white p-7 card-shadow"><h3 class="text-lg font-black">Visitor responsibility</h3><p class="mt-3 text-slate-700">Use bins, avoid single-use plastic, stay on paths, don’t feed wildlife, and follow CDA rules. Small habits keep the shore clean for everyone.</p></article>
-        <article class="rounded-3xl bg-white p-7 card-shadow"><h3 class="text-lg font-black">Birding etiquette</h3><p class="mt-3 text-slate-700">Winter brings migratory birds. Keep distance, lower your voice, and skip flash photography so the birds aren’t disturbed.</p></article>
+        <article class="rounded-3xl bg-white p-7 card-shadow"><h3 class="text-lg font-black">Visitor responsibility</h3><p class="mt-3 text-slate-700">Use bins, avoid single-use plastic, stay on paths, don't feed wildlife, and follow CDA rules. Small habits keep the shore clean for everyone.</p></article>
+        <article class="rounded-3xl bg-white p-7 card-shadow"><h3 class="text-lg font-black">Birding etiquette</h3><p class="mt-3 text-slate-700">Winter brings migratory birds. Keep distance, lower your voice, and skip flash photography so the birds aren't disturbed.</p></article>
         <article class="rounded-3xl bg-white p-7 card-shadow"><h3 class="text-lg font-black">Safety on the water</h3><p class="mt-3 text-slate-700">Only use managed boating when it is open, wear provided safety gear, and keep children supervised near the edge.</p></article>
       </div>
     </section>

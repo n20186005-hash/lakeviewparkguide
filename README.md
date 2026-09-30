@@ -1,6 +1,6 @@
 # Lake View Park Islamabad — Astro site
 
-Urdu (RTL) + English single-page attraction website for **Lake View Park / Rawal Lake, Islamabad**, with a professional non-profit visitor-guide focus.
+English-primary (with a Urdu secondary block) single-page attraction website for **Lake View Park / Rawal Lake, Islamabad**, with a professional non-profit visitor-guide focus.
 
 ## Stack
 
@@ -46,7 +46,7 @@ Structured data emitted: `TouristAttraction` (with `@id`, `image`, `isAccessible
 
 ### Reviews / ratings compliance
 
-The Google Maps rating (**4.5**, **14,890** reviews, synced **2026-09**) is shown on the page only, with a visible source attribution and a link to the Google Maps listing. It is **deliberately excluded from JSON-LD** to avoid misrepresenting third-party ratings. The attribution note and the "Sources" section carry the required copyright/source text.
+The Google Maps rating (**4.5**, **14,911** reviews, synced **2026-09**) is shown on the page only, with a visible source attribution and a link to the Google Maps listing. It is **deliberately excluded from JSON-LD** to avoid misrepresenting third-party ratings. The attribution note and the "Sources" section carry the required copyright/source text.
 
 ## Live weather (server-side, cached)
 

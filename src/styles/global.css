@@ -14,9 +14,12 @@ body {
   margin: 0;
   background: var(--cream);
   color: var(--ink);
-  font-family: "Noto Nastaliq Urdu", "Noto Sans Arabic", Tahoma, Arial, sans-serif;
-  line-height: 2;
+  font-family: ui-sans-serif, system-ui, "Segoe UI", Roboto, Helvetica, Arial, "Noto Nastaliq Urdu", "Noto Sans Arabic", Tahoma, sans-serif;
+  line-height: 1.7;
 }
+/* Urdu / RTL content blocks keep their own direction and Nastaliq rhythm. */
+.ur { direction: rtl; text-align: right; line-height: 2;
+  font-family: "Noto Nastaliq Urdu", "Noto Sans Arabic", Tahoma, Arial, sans-serif; }
 ::selection { background: #d9c7a1; color: #17231f; }
 a { color: inherit; }
 .hero-photo { background-position: center; background-size: cover; }
