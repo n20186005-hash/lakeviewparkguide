@@ -32,3 +32,5 @@ a { color: inherit; }
 .en { direction: ltr; text-align: left; line-height: 1.7;
   font-family: ui-sans-serif, system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
 .en h2, .en h3 { font-family: inherit; }
+
+.mobile-menu nav{position:absolute;top:5rem;inset-inline:1rem;display:grid;gap:.7rem;background:#102b33;padding:1rem;border-radius:1rem}.mobile-menu summary{cursor:pointer}.ur h2{line-height:1.8}.ur p{line-height:2.1}

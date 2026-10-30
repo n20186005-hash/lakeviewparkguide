@@ -1,6 +1,5 @@
 # Cloudflare Workers Static Assets honors this _headers file for response headers.
-# Domain-level redirects (http -> https, www -> apex) are configured in the
-# Cloudflare dashboard (Always Use HTTPS + Redirect Rules), not here.
+# The Worker consolidates the established HTTP/www entrances before static assets.
 
 /*
   Strict-Transport-Security: max-age=63072000; includeSubDomains; preload

@@ -9,7 +9,7 @@ const site = process.env.SITE_URL?.trim() || 'https://lakeviewparkguide.com';
 export default defineConfig({
   site,
   output: 'static',
-  integrations: site ? [sitemap()] : [],
+  integrations: site ? [sitemap({filter:url=>!/^\/404(?:\.html|\/)?$/.test(new URL(url).pathname)})] : [],
   vite: {
     plugins: [tailwindcss()],
   },

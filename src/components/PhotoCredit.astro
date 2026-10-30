@@ -1,0 +1,11 @@
+---
+interface Props { photo:1|2|3; dark?:boolean }
+const {photo,dark=false}=Astro.props;
+const p={
+1:{title:'Lake View Park aka Rawal Lake View Point.jpg',author:'Wisalahmad523',date:'2017-05-06',licence:'CC BY-SA 4.0',url:'https://creativecommons.org/licenses/by-sa/4.0/'},
+2:{title:'Rawal Lake.jpg',author:'Zpotrick',date:'2011-02-14',licence:'CC BY-SA 3.0',url:'https://creativecommons.org/licenses/by-sa/3.0/'},
+3:{title:'Rawal lake Islamabad 000.JPG',author:'Mahi619',date:'2015-12-04',licence:'CC BY-SA 4.0',url:'https://creativecommons.org/licenses/by-sa/4.0/'}
+}[photo];
+---
+<p id={'photo-credit-'+photo} lang="en" dir="ltr" class:list={['photo-credit',{'photo-credit-dark':dark}]}><a href={'https://commons.wikimedia.org/wiki/File:'+encodeURIComponent(p.title)}>{p.title}</a> · <a href={'https://commons.wikimedia.org/wiki/User:'+p.author}>{p.author}</a> · <time datetime={p.date}>{p.date}</time> · <a href={p.url}>{p.licence}</a><span class="block">Framed for display; original file unchanged. Historic photograph, not evidence of current access or boating availability.</span></p>
+<style>.photo-credit{margin-top:.75rem;font-size:.72rem;line-height:1.8;color:#42545d;overflow-wrap:anywhere}.photo-credit a{text-decoration:underline}.photo-credit-dark{color:#e1e9e9}</style>

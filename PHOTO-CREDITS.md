@@ -11,3 +11,5 @@ Local copies are stored under `public/images/` (used directly by the page):
    Source: https://commons.wikimedia.org/wiki/File:Rawal_lake_Islamabad_000.JPG
 
 All photos are referenced locally (not hot-linked) and are not AI-generated.
+
+The original image bytes are unchanged. The layout frames each photo; historic photographs do not establish current access or operation. Each visible use now carries its precise source, creator, date and licence link on the page. Copyright licensing does not establish separate venue or model releases; no such releases are claimed.
