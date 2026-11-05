@@ -1,0 +1,7 @@
+---
+import AttractionLayout from '../layouts/AttractionLayout.astro';
+import { getAttraction } from '../data/attractions';
+
+const a = getAttraction('faisal-mosque')!;
+---
+<AttractionLayout attraction={a} />
