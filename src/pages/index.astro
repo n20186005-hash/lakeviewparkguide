@@ -3,36 +3,65 @@ import '../styles/global.css';
 import PhotoCredit from '../components/PhotoCredit.astro';
 
 // ── Single source of truth: SEO entity binding variables ──────────────
-const DOMAIN = 'lakeviewparkguide.com';
-const SITE = `https://${DOMAIN}`;
+import { SITE, park } from '../data/park';
 const canonical = new URL(Astro.url.pathname || '/', SITE).toString();
-
-const park = {
-  fullName: 'Lake View Park',
-  shortName: 'Lake View Park',
-  city: 'Islamabad',
-  region: 'Islamabad Capital Territory',
-  country: 'Pakistan',
-  countryCode: 'PK',
-  plusCode: 'P47J+39P',
-  street: 'Murree Road',
-  lat: 33.71494,
-  lng: 73.13281,
-  rating: 4.5,
-  reviewCount: 14939,
-  category: 'Park',
-  mapsShareUrl: 'https://maps.app.goo.gl/6Jch5oC2zebDATyq9',
-  mapsEmbed: 'https://www.google.com/maps?q=P47J%2B39P%2C%20Murree%20Rd%2C%20Lake%20View%20Park%2C%20Islamabad%2C%20Pakistan&output=embed&hl=ur',
-  govtTourismUrl: 'https://tourism.gov.pk/',
-  cdaUrl: 'https://www.cda.gov.pk/environmentalProtectionCell',
-  pmdUrl: 'https://www.pmd.gov.pk/',
-  ratingSync: '29 October 2026',
-};
 
 const heroImg = '/images/lake-view-park-rawal-lake.jpg';
 const lakeImg = '/images/rawal-lake-islamabad.jpg';
 const galleryImg = '/images/rawal-lake-islamabad-view.jpg';
 const heroAlt = `${park.fullName} - Main view in ${park.city}, ${park.country}`;
+
+// Topic-guide clusters surfaced on the homepage (see SEO report §6/§7.11).
+const guideGroups: [string, [string, string][]][] = [
+  ['Plan your visit', [
+    ['Opening hours & closing time', '/opening-hours/'],
+    ['Entry fee & ticket prices', '/ticket-prices/'],
+    ['Is it open today?', '/open-today/'],
+    ['Park directory & facilities', '/park-directory/'],
+    ['Location & map', '/location-map/'],
+    ['Visitor facilities', '/visitor-facilities/'],
+    ['Rules & safety', '/visitor-rules/'],
+  ]],
+  ['Rides & experiences', [
+    ['Rides & attractions', '/rides-and-attractions/'],
+    ['Rides timings', '/rides-timings/'],
+    ['Boating', '/boating/'],
+    ['Rawal Lake views', '/rawal-lake-views/'],
+    ['Kids play areas', '/kids-play-areas/'],
+    ['Aviary status', '/aviary-status/'],
+    ['Things to do', '/things-to-do/'],
+  ]],
+  ['Getting there & parking', [
+    ['How to get there', '/how-to-get-there/'],
+    ['Parking', '/parking/'],
+    ['Public transport', '/public-transport/'],
+    ['From central Islamabad', '/from-islamabad-city/'],
+    ['From Rawalpindi', '/from-rawalpindi/'],
+    ['Taxi & ride-hailing', '/taxi-ride-hailing/'],
+  ]],
+  ['Visitor types', [
+    ['Family guide', '/family-guide/'],
+    ['Picnic guide', '/picnic-guide/'],
+    ['Best time to visit', '/best-time-to-visit/'],
+    ['Weekend guide', '/weekend-guide/'],
+    ['Accessibility', '/accessibility/'],
+    ['Rainy day guide', '/rainy-day-guide/'],
+  ]],
+  ['Itineraries', [
+    ['One-hour visit', '/one-hour-visit/'],
+    ['Two-hour visit', '/two-hour-visit/'],
+    ['Half-day itinerary', '/half-day-itinerary/'],
+    ['Family day trip', '/family-day-trip/'],
+    ['Sunset visit', '/sunset-visit/'],
+  ]],
+  ['Around the park', [
+    ['Nearby attractions', '/nearby-attractions/'],
+    ['Where to eat nearby', '/nearby-food/'],
+    ['Rawal Lake guide', '/rawal-lake-guide/'],
+    ['vs F-9 Park', '/lake-view-park-vs-f9-park/'],
+    ['Islamabad family parks', '/islamabad-family-parks/'],
+  ]],
+];
 
 // Structured data — reviews are intentionally NOT included here (they live on the
 // page only, attributed to Google Maps) to avoid misrepresenting third-party ratings.
@@ -55,7 +84,8 @@ const attractionJson = {
     streetAddress: park.street,
     addressLocality: park.city,
     addressRegion: park.region,
-    addressCountry: park.countryCode
+    addressCountry: park.countryCode,
+    postalCode: park.postalCode
   },
   geo: { '@type': 'GeoCoordinates', latitude: park.lat, longitude: park.lng },
   hasMap: park.mapsShareUrl,
@@ -63,6 +93,7 @@ const attractionJson = {
 };
 
 const pageJson = {'@context':'https://schema.org','@type':'WebPage',name:'Lake View Park Islamabad visitor guide',url:SITE+'/',inLanguage:['en','ur'],about:{'@id':SITE+'/#attraction'}};
+const websiteJson = {'@context':'https://schema.org','@type':'WebSite','@id':SITE+'/#website',name:park.fullName+' Islamabad Guide',url:SITE,inLanguage:['en','ur']};
 const currentHoursEn='Current gate and last-entry times have not been confirmed from CDA. Google Maps showed a 10:00 opening on 29 October 2026, but this does not establish an official weekly schedule or closing time. Confirm with CDA before travelling; activities may have separate hours.';
 const feeEn='CDA’s 4 July 2023 board decision stated no basic park entry fee and approved outsourcing parking-fee collection. That is dated policy evidence, not a verified 2026 tariff. Confirm today’s entry, parking and individual activity charges separately.';
 const aviaryEn='CDA’s Environmental Protection Cell page lists the Lakeview Park walk-in aviary as presently non-functional (checked 29 October 2026). Do not plan an aviary visit unless CDA confirms a change. The wider park and separately operated activities have their own access conditions.';
@@ -107,11 +138,11 @@ const faqJson = {
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Lake View Park Islamabad | Hours, Entry Fees &amp; Aviary Status</title>
-  <meta name="description" content={`Plan your visit to ${park.fullName} (Rawal Lake) in ${park.city}, ${park.country}. Confirm current gate hours and fees with CDA, check the aviary status, find Murree Road directions and read the weather forecast.`} />
+  <title>Lake View Park Islamabad | Timings, Tickets &amp; Visitor Guide</title>
+  <meta name="description" content="Plan your visit to Lake View Park in Islamabad. Find park timings, entry fee information, rides, facilities, Rawal Lake views, directions and official updates." />
   <link rel="canonical" href={canonical} />
   <meta property="og:type" content="website" />
-  <meta property="og:title" content={`${park.fullName} Islamabad — Hours, Fees & Aviary Status`} />
+  <meta property="og:title" content={`${park.fullName} Islamabad — Timings, Tickets & Visitor Guide`} />
   <meta property="og:description" content={`Visitor guide to ${park.fullName} (Rawal Lake), ${park.city}: CDA access information, dated fee-policy evidence, aviary status, directions and weather.`} />
   <meta property="og:locale" content="en_US" />
   <meta property="og:url" content={SITE} />
@@ -129,6 +160,7 @@ const faqJson = {
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
   <script is:inline type="application/ld+json" set:html={JSON.stringify(attractionJson)}></script>
   <script is:inline type="application/ld+json" set:html={JSON.stringify(pageJson)}></script>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(websiteJson)}></script>
   <script is:inline type="application/ld+json" set:html={JSON.stringify(faqJson)}></script>
   <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-HXM22WWPKP"></script>
   <script is:inline>
@@ -243,6 +275,7 @@ const faqJson = {
         <div>
           <p class="text-sm font-bold text-[#a66f2d]">Getting here</p>
           <h2 class="mt-2 text-4xl font-black">Location &amp; How to Visit {park.shortName} in {park.city}</h2>
+          <p class="mt-5 rounded-2xl bg-white p-5 text-sm card-shadow"><b>Listing address</b><br />{park.plusCode}, {park.street}, {park.fullName}, {park.city} {park.postalCode}, {park.country} · <a class="font-semibold text-[#a66f2d] underline" href={park.mapsShareUrl} target="_blank" rel="noopener noreferrer">Open in Google Maps ↗</a></p>
           <div class="mt-8 space-y-5">
             <div class="rounded-3xl bg-white p-6 card-shadow">
               <b>✈️ From the airport</b>
@@ -398,6 +431,21 @@ const faqJson = {
       </div>
     </section>
 
+    <!-- TOPIC GUIDES (English) -->
+    <section lang="en" dir="ltr" id="guides" class="en mx-auto max-w-6xl px-5 py-20">
+      <p class="text-sm font-bold text-[#a66f2d]">More guides</p>
+      <h2 class="mt-2 text-4xl font-black">Lake View Park Topic Guides</h2>
+      <p class="mt-3 max-w-3xl text-slate-600">Focused pages that answer the questions visitors actually search before they travel — hours, fees, rides, directions, itineraries and nearby places.</p>
+      <div class="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {guideGroups.map(([cluster, items]) => (
+          <div class="rounded-3xl bg-white p-7 card-shadow">
+            <h3 class="text-lg font-black">{cluster}</h3>
+            <ul class="mt-4 space-y-2 text-sm">{items.map(([t, h]) => <li><a class="font-semibold text-[#a66f2d] underline" href={h}>{t}</a></li>)}</ul>
+          </div>
+        ))}
+      </div>
+    </section>
+
     <!-- FAQ (Urdu) -->
     <section id="faq" lang="ur" dir="rtl" class="ur bg-white py-20"><div class="mx-auto max-w-4xl px-5"><p class="text-sm font-bold text-[#a66f2d]">FAQ</p><h2 class="mt-2 text-4xl font-black">عام سوالات</h2><div class="mt-8 divide-y divide-slate-200 rounded-[2rem] border border-slate-200 px-7">{faqUr.map(([q,a]) => <details class="py-6"><summary class="cursor-pointer text-lg font-black">{q}</summary><p class="pt-4 text-slate-700">{a}</p></details>)}</div></div></section>
 
@@ -409,7 +457,7 @@ const faqJson = {
       <div class="mx-auto max-w-4xl px-5">
         <p class="text-sm font-bold text-[#f2b86d]">Sources</p>
         <h2 class="mt-2 text-4xl font-black text-white">References &amp; Data Sources</h2>
-        <ul class="mt-8 space-y-5 text-sm leading-7"><li><b>Google Maps · {park.ratingSync}</b><br/>Third-party 4.5 / 5 from 14,939 reviews; not collected by this guide. <a class="underline" href={park.mapsShareUrl}>View the listing</a>.</li><li><a class="underline" href="https://cda.gov.pk/destination">CDA: destinations in Islamabad</a> — park description, not a timetable.</li><li><a class="underline" href={park.cdaUrl}>CDA: Environmental Protection Cell</a> — parks remit and the non-functional walk-in aviary, checked 29 October 2026.</li><li><a class="underline" href="https://www.cda.gov.pk/public/Assets/YEAR_2023/4th-Jul-2023.pdf">CDA board decision, 4 July 2023, page 8</a> — historic basic-entry and parking decision, not current prices.</li><li><a class="underline" href="https://ictadministration.gov.pk/public-places/">ICT Administration: public places</a> · <a class="underline" href="https://www.pmd.gov.pk/">Pakistan Meteorological Department</a> · <a class="underline" href="https://www.cda.gov.pk/cdaTransitMap">CDA transit information</a></li><li>Exact photograph sources, creators, dates and licences appear beside each image. <a class="underline" href="#photo-credit-1">First image credit</a>.</li></ul><h3 id="privacy" class="mt-10 text-2xl font-black text-white">Privacy and purpose</h3><p class="mt-4 text-sm leading-7">This independent noncommercial tourism and cultural guide offers no bookings, tickets or payments. Google Analytics loads to analyse page use; the Google Maps embed connects to Google separately. Cloudflare provides hosting and security and may process connection and technical data. Our server requests Open-Meteo weather for fixed park coordinates; it does not need your location.</p><p lang="ur" dir="rtl" class="ur mt-4 text-sm">یہ آزاد غیر تجارتی سیاحتی معلوماتی رہنما ہے۔ Google Analytics اور Google نقشہ براؤزر سے جڑتے ہیں، جبکہ Cloudflare میزبانی اور حفاظتی ڈیٹا پراسیس کر سکتا ہے۔ موسم کے لیے سرور پارک کے مقررہ نقاط استعمال کرتا ہے؛ آپ کی لوکیشن ضروری نہیں۔</p><p class="mt-4 text-sm leading-7">Hosting also adds a Cloudflare Web Analytics browser beacon to measure visits, page views and page-load performance. It may process page paths, referring sites and browser or device information. This measurement operates independently of Google Analytics; this page has no switch to control it. See Cloudflare’s <a class="underline" href="https://developers.cloudflare.com/web-analytics/data-metrics/high-level-metrics/">measurement documentation</a> and <a class="underline" href="https://developers.cloudflare.com/web-analytics/data-metrics/data-origin-and-collection/">beacon data collection documentation</a>.</p><p lang="ur" dir="rtl" class="ur mt-4 text-sm leading-8">میزبانی کی خدمت براؤزر میں Cloudflare Web Analytics کا beacon بھی شامل کرتی ہے، جو دوروں، صفحہ دیکھے جانے اور صفحہ لوڈ ہونے کی کارکردگی کی پیمائش کرتا ہے۔ اس میں صفحے کے راستے، حوالہ دینے والی ویب سائٹ، براؤزر یا آلے کی معلومات پراسیس ہو سکتی ہیں۔ یہ پیمائش Google Analytics سے الگ کام کرتی ہے؛ اس صفحے پر اسے کنٹرول کرنے کا کوئی سوئچ نہیں۔ Cloudflare کی <a class="underline" href="https://developers.cloudflare.com/web-analytics/data-metrics/high-level-metrics/">پیمائش کی وضاحت</a> اور <a class="underline" href="https://developers.cloudflare.com/web-analytics/data-metrics/data-origin-and-collection/">beacon کے ڈیٹا جمع کرنے کی وضاحت</a> دیکھیں۔</p><p class="mt-4 text-sm"><a class="underline" href="https://policies.google.com/privacy">Google privacy</a> · <a class="underline" href="https://www.cloudflare.com/privacypolicy/">Cloudflare privacy</a> · <a class="underline" href="https://open-meteo.com/en/terms">Open-Meteo terms and privacy</a></p>
+        <ul class="mt-8 space-y-5 text-sm leading-7"><li><b>Google Maps · {park.ratingSync}</b><br/>Third-party {park.rating} / 5 from {park.reviewCount.toLocaleString('en-US')} reviews; not collected by this guide. <a class="underline" href={park.mapsShareUrl}>View the listing</a>.</li><li><a class="underline" href="https://cda.gov.pk/destination">CDA: destinations in Islamabad</a> — park description, not a timetable.</li><li><a class="underline" href={park.cdaUrl}>CDA: Environmental Protection Cell</a> — parks remit and the non-functional walk-in aviary, checked 29 October 2026.</li><li><a class="underline" href="https://www.cda.gov.pk/public/Assets/YEAR_2023/4th-Jul-2023.pdf">CDA board decision, 4 July 2023, page 8</a> — historic basic-entry and parking decision, not current prices.</li><li><a class="underline" href="https://ictadministration.gov.pk/public-places/">ICT Administration: public places</a> · <a class="underline" href="https://www.pmd.gov.pk/">Pakistan Meteorological Department</a> · <a class="underline" href="https://www.cda.gov.pk/cdaTransitMap">CDA transit information</a></li><li>Exact photograph sources, creators, dates and licences appear beside each image. <a class="underline" href="#photo-credit-1">First image credit</a>.</li></ul><h3 id="privacy" class="mt-10 text-2xl font-black text-white">Privacy and purpose</h3><p class="mt-4 text-sm leading-7">This independent noncommercial tourism and cultural guide offers no bookings, tickets or payments. Google Analytics loads to analyse page use; the Google Maps embed connects to Google separately. Cloudflare provides hosting and security and may process connection and technical data. Our server requests Open-Meteo weather for fixed park coordinates; it does not need your location.</p><p lang="ur" dir="rtl" class="ur mt-4 text-sm">یہ آزاد غیر تجارتی سیاحتی معلوماتی رہنما ہے۔ Google Analytics اور Google نقشہ براؤزر سے جڑتے ہیں، جبکہ Cloudflare میزبانی اور حفاظتی ڈیٹا پراسیس کر سکتا ہے۔ موسم کے لیے سرور پارک کے مقررہ نقاط استعمال کرتا ہے؛ آپ کی لوکیشن ضروری نہیں۔</p><p class="mt-4 text-sm leading-7">Hosting also adds a Cloudflare Web Analytics browser beacon to measure visits, page views and page-load performance. It may process page paths, referring sites and browser or device information. This measurement operates independently of Google Analytics; this page has no switch to control it. See Cloudflare’s <a class="underline" href="https://developers.cloudflare.com/web-analytics/data-metrics/high-level-metrics/">measurement documentation</a> and <a class="underline" href="https://developers.cloudflare.com/web-analytics/data-metrics/data-origin-and-collection/">beacon data collection documentation</a>.</p><p lang="ur" dir="rtl" class="ur mt-4 text-sm leading-8">میزبانی کی خدمت براؤزر میں Cloudflare Web Analytics کا beacon بھی شامل کرتی ہے، جو دوروں، صفحہ دیکھے جانے اور صفحہ لوڈ ہونے کی کارکردگی کی پیمائش کرتا ہے۔ اس میں صفحے کے راستے، حوالہ دینے والی ویب سائٹ، براؤزر یا آلے کی معلومات پراسیس ہو سکتی ہیں۔ یہ پیمائش Google Analytics سے الگ کام کرتی ہے؛ اس صفحے پر اسے کنٹرول کرنے کا کوئی سوئچ نہیں۔ Cloudflare کی <a class="underline" href="https://developers.cloudflare.com/web-analytics/data-metrics/high-level-metrics/">پیمائش کی وضاحت</a> اور <a class="underline" href="https://developers.cloudflare.com/web-analytics/data-metrics/data-origin-and-collection/">beacon کے ڈیٹا جمع کرنے کی وضاحت</a> دیکھیں۔</p><p class="mt-4 text-sm"><a class="underline" href="https://policies.google.com/privacy">Google privacy</a> · <a class="underline" href="https://www.cloudflare.com/privacypolicy/">Cloudflare privacy</a> · <a class="underline" href="https://open-meteo.com/en/terms">Open-Meteo terms and privacy</a></p>
       </div>
     </section>
   </main>

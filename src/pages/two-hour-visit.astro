@@ -1,0 +1,65 @@
+---
+import SubpageLayout from '../layouts/SubpageLayout.astro';
+import Checklist from '../components/Checklist.astro';
+import PhotoCredit from '../components/PhotoCredit.astro';
+---
+<SubpageLayout
+  title="Lake View Park Two-Hour Itinerary"
+  description="Lake View Park two-hour itinerary: a lakeside walk with a short rest and play stop, plus walking amount and weather adjustments."
+  path="/two-hour-visit/"
+  faq={[
+    { q: 'What can I do in two hours at Lake View Park?', a: 'A calm lakefront walk, a viewpoint photo stop, a short rest or play-area look (confirm it’s open), and a lawn break — about two hours total at an easy pace.' },
+    { q: 'Does the two-hour plan depend on paid activities?', a: 'No. It works without boating or rides, so a closure won’t break it. The play stop is optional and depends on what’s operating that day.' },
+    { q: 'Is it family-friendly?', a: 'Yes — the walk is moderate and mostly easy, with a rest built in. Adjust the length for toddlers or older family members.' },
+    { q: 'How should I handle heat or rain?', a: 'In heat, shift the walk to the cooler part of the day; after rain, watch slippery paths and the lake edge. Timings are editorial estimates, not measured tracks.' },
+  ]}
+  breadcrumb={[{ name: 'Home', href: '/' }, { name: 'Two-hour visit', href: '/two-hour-visit/' }]}
+  image="/images/rawal-lake-islamabad-view.jpg"
+  related={[
+    { label: 'One-hour visit', href: '/one-hour-visit/' },
+    { label: 'Half-day itinerary', href: '/half-day-itinerary/' },
+    { label: 'Picnic guide', href: '/picnic-guide/' },
+    { label: 'Kids play areas', href: '/kids-play-areas/' },
+  ]}
+>
+  <article class="space-y-8">
+    <p class="text-lg leading-8 text-slate-700">Two hours lets you enjoy the lake at a calm pace and add a short rest or play stop without rushing.</p>
+
+    <section>
+      <h2 class="text-2xl font-black text-[#143844]">The route</h2>
+      <ol class="mt-3 list-decimal space-y-2 pl-5 leading-8">
+        <li>Arrive and walk the lakefront toward a viewpoint.</li>
+        <li>Pause for photos and, if travelling with children, a quick play-area look (confirm it is open).</li>
+        <li>Settle on a lawn for 20–30 minutes of rest or a light snack.</li>
+        <li>Return along the shore and leave — about two hours total.</li>
+      </ol>
+    </section>
+
+    <section>
+      <h2 class="text-2xl font-black text-[#143844]">Walking and suitability</h2>
+      <p class="mt-3 leading-8">Expect a moderate, mostly easy walk with a rest built in, suitable for families and casual visitors. The play stop is optional and depends on what is operating that day.</p>
+    </section>
+
+    <section>
+      <h2 class="text-2xl font-black text-[#143844]">Dependencies and weather</h2>
+      <p class="mt-3 leading-8">The plan works without boating or rides, so a closure won’t break it. In heat, shift the walk to the cooler part of the day; after rain, watch slippery paths and the lake edge. Timings are editorial estimates, not measured tracks.</p>
+    </section>
+
+    <section>
+      <h2 class="text-2xl font-black text-[#143844]">Keep it calm</h2>
+      <p class="mt-3 leading-8">Two hours is enough to enjoy the lake without rushing. Build the plan around the shore and a lawn break, and treat any paid activity as an optional extra to confirm, so a closure never spoils the outing.</p>
+    </section>
+
+    <Checklist title="Two-hour day-of checklist" items={[
+      'Confirm gate hours and parking on arrival.',
+      'Pack water and a light snack for the lawn break.',
+      'Confirm the play area is open if you plan to use it.',
+      'In heat, go early or late; after rain, mind slippery paths.',
+    ]} />
+
+    <figure>
+      <img src="/images/rawal-lake-islamabad-view.jpg" width="1440" height="960" alt="Lakeside structure at Rawal Lake near Lake View Park, Islamabad" class="h-[360px] w-full rounded-[2rem] object-cover card-shadow" loading="lazy" />
+      <figcaption><PhotoCredit photo={3} /></figcaption>
+    </figure>
+  </article>
+</SubpageLayout>

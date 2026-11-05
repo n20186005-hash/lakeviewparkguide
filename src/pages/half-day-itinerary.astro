@@ -1,0 +1,71 @@
+---
+import SubpageLayout from '../layouts/SubpageLayout.astro';
+import Checklist from '../components/Checklist.astro';
+import PhotoCredit from '../components/PhotoCredit.astro';
+---
+<SubpageLayout
+  title="Half-Day Lake View Park Islamabad Itinerary"
+  description="Half-day Lake View Park Islamabad itinerary: a family-friendly plan with a lake walk, play time and food break, plus what to confirm."
+  path="/half-day-itinerary/"
+  faq={[
+    { q: 'How long is a good half-day at Lake View Park?', a: 'Around three to four hours for a relaxed family outing: a lake walk, children’s activities and a food break, without racing the clock. Timings are editorial estimates.' },
+    { q: 'What should I confirm before going?', a: 'Current gate hours, parking and any entry/parking charges — see the opening hours, parking and ticket prices pages. Confirm on-site operation of boating or rides if you plan to use them.' },
+    { q: 'Is the half-day plan flexible if something is closed?', a: 'Yes. It is built around the lake and lawns, which never need a booking, with boating and rides as optional confirm-on-site extras.' },
+    { q: 'Where do we eat?', a: 'On-site food stalls or your own picnic on the lawns. Bring your own supplies if you want to avoid relying on stalls being open.' },
+  ]}
+  breadcrumb={[{ name: 'Home', href: '/' }, { name: 'Half-day itinerary', href: '/half-day-itinerary/' }]}
+  image="/images/lake-view-park-rawal-lake.jpg"
+  related={[
+    { label: 'Two-hour visit', href: '/two-hour-visit/' },
+    { label: 'Family guide', href: '/family-guide/' },
+    { label: 'Picnic guide', href: '/picnic-guide/' },
+    { label: 'Ticket prices', href: '/ticket-prices/' },
+  ]}
+>
+  <article class="space-y-8">
+    <p class="text-lg leading-8 text-slate-700">Around three to four hours is enough for a relaxed family outing: a lake walk, children’s activities and a food break, without racing the clock.</p>
+
+    <section>
+      <h2 class="text-2xl font-black text-[#143844]">The itinerary</h2>
+      <ol class="mt-3 list-decimal space-y-2 pl-5 leading-8">
+        <li>Late-morning arrival; park and head to the lakefront.</li>
+        <li>Easy lakeside walk and viewpoints (30–45 min).</li>
+        <li>Children’s play area or a short boating look — confirm operation on-site.</li>
+        <li>Casual lunch at on-site food stalls or your own picnic.</li>
+        <li>Second short walk or rest, then leave before the evening rush.</li>
+      </ol>
+    </section>
+
+    <section>
+      <h2 class="text-2xl font-black text-[#143844]">Before you go</h2>
+      <p class="mt-3 leading-8">Confirm current gate hours (see <a class="font-semibold text-[#a66f2d] underline" href="/opening-hours/">opening hours</a>), parking (see <a class="font-semibold text-[#a66f2d] underline" href="/parking/">parking</a>) and any entry/parking charges (see <a class="font-semibold text-[#a66f2d] underline" href="/ticket-prices/">ticket prices</a>) so the half-day is smooth.</p>
+    </section>
+
+    <section>
+      <h2 class="text-2xl font-black text-[#143844]">Flexibility</h2>
+      <p class="mt-3 leading-8">Build the plan around the lake and lawns, which never need a booking. Treat boating and rides as optional, confirm-on-site extras so a closure doesn’t spoil the day.</p>
+    </section>
+
+    <div class="rounded-2xl bg-[#f3ede0] p-5">
+      <p class="text-sm font-black text-[#5b4a2f]">Estimates, not a measured track</p>
+      <p class="mt-2 text-sm leading-7 text-[#5b4a2f]">Walking amounts and durations are editorial guidance. Adjust for your group’s pace, the weather and queue times on the day.</p>
+    </div>
+
+    <section>
+      <h2 class="text-2xl font-black text-[#143844]">Eat and rest on your terms</h2>
+      <p class="mt-3 leading-8">A half-day works best when you don’t depend on a single food outlet. Bring water and a picnic option, use the lawns for a rest, and keep the timing loose so queues or a closure don’t stress the group.</p>
+    </section>
+
+    <Checklist title="Half-day day-of checklist" items={[
+      'Confirm gate hours, parking and any charges on arrival.',
+      'Bring water, sun protection and a picnic option.',
+      'Confirm boating or rides if you plan to use them.',
+      'Leave before the evening return rush to ease transport.',
+    ]} />
+
+    <figure>
+      <img src="/images/lake-view-park-rawal-lake.jpg" width="1280" height="960" alt="Lake View Park lakeshore along Rawal Lake, Islamabad" class="h-[360px] w-full rounded-[2rem] object-cover card-shadow" loading="lazy" />
+      <figcaption><PhotoCredit photo={1} /></figcaption>
+    </figure>
+  </article>
+</SubpageLayout>

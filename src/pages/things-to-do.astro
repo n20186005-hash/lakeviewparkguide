@@ -1,0 +1,70 @@
+---
+import SubpageLayout from '../layouts/SubpageLayout.astro';
+import Checklist from '../components/Checklist.astro';
+import PhotoCredit from '../components/PhotoCredit.astro';
+---
+<SubpageLayout
+  title="Things to Do at Lake View Park Islamabad"
+  description="Things to do at Lake View Park Islamabad: lakeside walks, picnics, boating, children’s activities, photography and birdwatching — with what to confirm."
+  path="/things-to-do/"
+  faq={[
+    { q: 'What is the most reliable thing to do at Lake View Park?', a: 'A lakeside walk and a picnic on the open lawns. Neither needs a booking or a separate charge beyond park access, so they are the safe core of any visit.' },
+    { q: 'Are boating and rides guaranteed?', a: 'No. Both are associated with the park but run separately and can close for weather, water level or maintenance. Confirm availability and any charge on-site — this guide does not publish those schedules.' },
+    { q: 'Is Lake View Park good for families?', a: 'Yes — the open space, lake edge and separate kids’ areas suit families. See the family guide and kids play areas pages for specifics to confirm on-site.' },
+    { q: 'When is the best light for photos?', a: 'Soft morning and golden-hour light on Rawal Lake are the highlights; winter adds migratory birds. Keep distance from wildlife and avoid flash.' },
+  ]}
+  breadcrumb={[{ name: 'Home', href: '/' }, { name: 'Things to do', href: '/things-to-do/' }]}
+  image="/images/lake-view-park-rawal-lake.jpg"
+  related={[
+    { label: 'Rides & attractions', href: '/rides-and-attractions/' },
+    { label: 'Boating', href: '/boating/' },
+    { label: 'Rawal Lake views', href: '/rawal-lake-views/' },
+    { label: 'Family guide', href: '/family-guide/' },
+  ]}
+>
+  <article class="space-y-8">
+    <p class="text-lg leading-8 text-slate-700">Lake View Park is more about “staying” than “doing” — its appeal is calm lake time, open lawns and family space. Here is a realistic menu of activities, with the ones that need on-site confirmation flagged.</p>
+
+    <section>
+      <h2 class="text-2xl font-black text-[#143844]">Lakeside walk</h2>
+      <p class="mt-3 leading-8">The most reliable activity: an easy walk along Rawal Lake with viewpoints and fresh air. No booking, no charge beyond park access.</p>
+    </section>
+
+    <section>
+      <h2 class="text-2xl font-black text-[#143844]">Picnic</h2>
+      <p class="mt-3 leading-8">Open lawns suit a relaxed picnic. Bring a mat and your own supplies, use the bins, and keep the shore clean (see the <a class="font-semibold text-[#a66f2d] underline" href="/picnic-guide/">picnic guide</a>).</p>
+    </section>
+
+    <section>
+      <h2 class="text-2xl font-black text-[#143844]">Boating and children’s activities</h2>
+      <p class="mt-3 leading-8">Both are associated with the park but run separately and can be closed for weather or maintenance. Confirm availability and any charge on-site — see <a class="font-semibold text-[#a66f2d] underline" href="/boating/">boating</a> and <a class="font-semibold text-[#a66f2d] underline" href="/kids-play-areas/">kids play areas</a>.</p>
+    </section>
+
+    <section>
+      <h2 class="text-2xl font-black text-[#143844]">Photography and birdwatching</h2>
+      <p class="mt-3 leading-8">Soft morning and golden-hour light on the lake are the highlights. Winter brings migratory birds; keep distance and avoid flash. The non-functional aviary is distinct from wild birds around the lake.</p>
+    </section>
+
+    <div class="rounded-2xl bg-[#f3ede0] p-5">
+      <p class="text-sm font-black text-[#5b4a2f]">Build a flexible plan</p>
+      <p class="mt-2 text-sm leading-7 text-[#5b4a2f]">Lead with the lake, lawns and walks, which never need a booking. Treat boating and rides as bonuses to confirm, so a closed activity doesn’t spoil the day.</p>
+    </div>
+
+    <section>
+      <h2 class="text-2xl font-black text-[#143844]">Make the lake the plan</h2>
+      <p class="mt-3 leading-8">The safest way to enjoy Lake View Park is to build the day around the lake, lawns and walks, which are available without a separate booking. Treat boating, rides and other separately operated activities as extras to confirm on arrival, so a closed activity never spoils the trip.</p>
+    </section>
+
+    <Checklist items={[
+      'Lead with a lakeside walk and picnic — no booking needed.',
+      'Treat boating and rides as bonuses to confirm on-site.',
+      'Bring a mat and supplies if you plan a picnic.',
+      'Check the morning or late-afternoon light for photos.',
+    ]} />
+
+    <figure>
+      <img src="/images/lake-view-park-rawal-lake.jpg" width="1280" height="960" alt="Lake View Park lakeshore along Rawal Lake, Islamabad" class="h-[360px] w-full rounded-[2rem] object-cover card-shadow" loading="lazy" />
+      <figcaption><PhotoCredit photo={1} /></figcaption>
+    </figure>
+  </article>
+</SubpageLayout>

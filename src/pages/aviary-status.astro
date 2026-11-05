@@ -1,0 +1,66 @@
+---
+import SubpageLayout from '../layouts/SubpageLayout.astro';
+import Checklist from '../components/Checklist.astro';
+import { park } from '../data/park';
+import PhotoCredit from '../components/PhotoCredit.astro';
+---
+<SubpageLayout
+  title="Lake View Park Aviary: Current Status & History"
+  description="Lake View Park aviary status: the difference between a past attraction and current operation, per CDA’s Environmental Protection Cell."
+  path="/aviary-status/"
+  faq={[
+    { q: 'Is the Lake View Park aviary open now?', a: 'CDA’s Environmental Protection Cell lists the walk-in aviary as presently non-functional (checked 29 October 2026). Don’t plan a special trip for it until CDA confirms a reopening.' },
+    { q: 'Was there an aviary at the park before?', a: 'Yes — older visitor accounts and photos show a walk-in aviary. Those reflect its past state, not current operation, which is why this guide separates “used to be there” from “open now.”' },
+    { q: 'What can I still do at the park?', a: 'The lake, lawns, walks and separately operated activities remain the main reasons to visit. Build your plan around those rather than the aviary.' },
+    { q: 'How do I verify the status before visiting?', a: 'Re-check CDA’s Environmental Protection Cell listing or ask on-site management, since the status can change and older online images are misleading.' },
+  ]}
+  breadcrumb={[{ name: 'Home', href: '/' }, { name: 'Aviary status', href: '/aviary-status/' }]}
+  image="/images/rawal-lake-islamabad-view.jpg"
+  related={[
+    { label: 'Park directory', href: '/park-directory/' },
+    { label: 'Things to do', href: '/things-to-do/' },
+    { label: 'Visitor rules', href: '/visitor-rules/' },
+    { label: 'Opening hours', href: '/opening-hours/' },
+  ]}
+>
+  <article class="space-y-8">
+    <p class="text-lg leading-8 text-slate-700">“The aviary used to be there” and “the aviary is open now” are different claims. This page keeps them separate and bases the current status on CDA’s own listing.</p>
+
+    <section>
+      <h2 class="text-2xl font-black text-[#143844]">What the aviary was</h2>
+      <p class="mt-3 leading-8">Lake View Park’s walk-in aviary was a known feature in earlier visitor accounts and photos. Older images online can create the impression it is still open.</p>
+    </section>
+
+    <section>
+      <h2 class="text-2xl font-black text-[#143844]">Current status</h2>
+      <p class="mt-3 leading-8">CDA’s Environmental Protection Cell page lists the Lakeview Park walk-in aviary as <strong>presently non-functional</strong> (checked 29 October 2026). That is the authoritative position this guide uses; do not plan an aviary visit unless CDA confirms a change.</p>
+    </section>
+
+    <section>
+      <h2 class="text-2xl font-black text-[#143844]">Why this matters for your trip</h2>
+      <p class="mt-3 leading-8">The wider park, lake and separately operated activities remain the main reasons to visit. Building a plan around the aviary would risk disappointment, so treat it as closed until officially reopened.</p>
+    </section>
+
+    <div class="rounded-2xl border-l-4 border-[#b3261e] bg-[#fdecea] p-5">
+      <p class="text-sm font-black text-[#b3261e]">Source and verification</p>
+      <p class="mt-2 text-sm leading-7 text-[#7a1c16]">Status is taken from CDA’s Environmental Protection Cell listing, not from older photos or third-party posts. Re-check with CDA before any special trip: <a class="underline" href={park.cdaUrl}>CDA Environmental Protection Cell ↗</a>.</p>
+    </div>
+
+    <section>
+      <h2 class="text-2xl font-black text-[#143844]">Plan around what is open</h2>
+      <p class="mt-3 leading-8">Because the aviary is listed as non-functional, build your visit around the lake, lawns and walks, which need no separate booking or confirmation. Treat the aviary only as a possibility to re-check, not a guaranteed attraction.</p>
+    </section>
+
+    <Checklist items={[
+      'Don’t make the aviary the main reason for a special trip.',
+      'Re-check CDA’s listing or ask on-site management before you go.',
+      'Plan around the lake, lawns and walks instead.',
+      'Keep the official CDA source handy for status updates.',
+    ]} />
+
+    <figure>
+      <img src="/images/rawal-lake-islamabad-view.jpg" width="1440" height="960" alt="Lakeside structure at Rawal Lake near Lake View Park, Islamabad" class="h-[360px] w-full rounded-[2rem] object-cover card-shadow" loading="lazy" />
+      <figcaption><PhotoCredit photo={3} /></figcaption>
+    </figure>
+  </article>
+</SubpageLayout>

@@ -1,0 +1,71 @@
+---
+import SubpageLayout from '../layouts/SubpageLayout.astro';
+import Checklist from '../components/Checklist.astro';
+import PhotoCredit from '../components/PhotoCredit.astro';
+---
+<SubpageLayout
+  title="Boating at Lake View Park: Availability & Safety"
+  description="Boating at Lake View Park Islamabad: why availability depends on water, weather and management, and how to confirm safely before you go."
+  path="/boating/"
+  faq={[
+    { q: 'Is boating available every day?', a: 'No. Boating on Rawal Lake depends on water level, weather, the relevant authority’s limits and the operator’s arrangements. A park description that mentions boating does not mean a boat is available on any given day — confirm on-site.' },
+    { q: 'How much does boating cost?', a: 'This guide does not publish a boating price because it is set by the operator and can change. Ask at the lake for the current rate.' },
+    { q: 'Is boating safe for children?', a: 'Only use managed boating when it is open, and wear the provided safety gear. Keep children supervised near the edge at all times — never enter the water outside managed activity.' },
+    { q: 'Can I swim in Rawal Lake?', a: 'No. Rawal Lake is a working reservoir; swimming outside managed activity is not permitted. See the visitor rules page.' },
+  ]}
+  breadcrumb={[{ name: 'Home', href: '/' }, { name: 'Boating', href: '/boating/' }]}
+  image="/images/lake-view-park-rawal-lake.jpg"
+  related={[
+    { label: 'Rides timings', href: '/rides-timings/' },
+    { label: 'Rawal Lake views', href: '/rawal-lake-views/' },
+    { label: 'Visitor rules', href: '/visitor-rules/' },
+    { label: 'Ticket prices', href: '/ticket-prices/' },
+  ]}
+>
+  <article class="space-y-8">
+    <p class="text-lg leading-8 text-slate-700">Boating is one of the activities CDA’s general destination description associates with Lake View Park, but its day-to-day availability is not something this guide can promise. The points below explain why, and how to check responsibly.</p>
+
+    <section>
+      <h2 class="text-2xl font-black text-[#143844]">Why availability varies</h2>
+      <p class="mt-3 leading-8">Boating on Rawal Lake depends on water level, weather, the relevant authority’s limits and the operator’s arrangements. A park description that mentions boating does not mean a boat is available on any given day.</p>
+    </section>
+
+    <section>
+      <h2 class="text-2xl font-black text-[#143844]">No guaranteed operation</h2>
+      <p class="mt-3 leading-8">This page does <strong>not</strong> state that boating is currently running, and it does <strong>not</strong> publish a boat ticket price. Both must be confirmed with the on-site operator, because they change with conditions and management.</p>
+    </section>
+
+    <section>
+      <h2 class="text-2xl font-black text-[#143844]">Safety first</h2>
+      <p class="mt-3 leading-8">Only use managed boating when it is open, wear any provided life jacket or safety gear, and keep children supervised near the water. During wind, rain or thunderstorms, water activities are commonly suspended — follow the operator and any official warnings.</p>
+    </section>
+
+    <section>
+      <h2 class="text-2xl font-black text-[#143844]">How to confirm on the day</h2>
+      <p class="mt-3 leading-8">Ask at the lakefront or with on-site management whether boating is operating and what it costs. Pair this with <a class="font-semibold text-[#a66f2d] underline" href="/#weather">the park weather guidance</a> so a sudden storm doesn’t catch you out.</p>
+    </section>
+
+    <div class="rounded-2xl border-l-4 border-[#b3261e] bg-[#fdecea] p-5">
+      <p class="text-sm font-black text-[#b3261e]">Plan a visit that works without boating</p>
+      <p class="mt-2 text-sm leading-7 text-[#7a1c16]">Because boating can be unavailable, build your plan around the lake views, walks and lawns, which need no separate booking. Treat boating as a bonus to confirm, not the basis of the trip.</p>
+    </div>
+
+    <section>
+      <h2 class="text-2xl font-black text-[#143844]">Safety on the lake</h2>
+      <p class="mt-3 leading-8">Rawal Lake is a working reservoir, not a swimming lake. Only use managed boating when it is open, always wear the provided safety gear, and keep children supervised near the edge. If boating is paused for weather or water level, switch to a lakeside walk — the view is the same.</p>
+    </section>
+
+    <Checklist items={[
+      'Confirm boating is operating before you rely on it as a plan.',
+      'Only use managed boating with provided safety gear.',
+      'Keep children supervised near the water.',
+      'Ask the operator for the current boating rate.',
+      'Check the weather — wind and rain can pause lake activities.',
+    ]} />
+
+    <figure>
+      <img src="/images/lake-view-park-rawal-lake.jpg" width="1280" height="960" alt="Lake View Park lakeshore along Rawal Lake, Islamabad" class="h-[360px] w-full rounded-[2rem] object-cover card-shadow" loading="lazy" />
+      <figcaption><PhotoCredit photo={1} /></figcaption>
+    </figure>
+  </article>
+</SubpageLayout>

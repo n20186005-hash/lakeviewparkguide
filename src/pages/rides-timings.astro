@@ -1,0 +1,71 @@
+---
+import SubpageLayout from '../layouts/SubpageLayout.astro';
+import Checklist from '../components/Checklist.astro';
+import PhotoCredit from '../components/PhotoCredit.astro';
+---
+<SubpageLayout
+  title="Lake View Park Rides Timings & Availability"
+  description="Lake View Park rides timings: why activity hours differ from the park gate, how weather and weekends affect them, and how to confirm on-site."
+  path="/rides-timings/"
+  faq={[
+    { q: 'What time do the rides open?', a: 'There is no single published timetable. Rides and activities are often run by different operators and can open later or close earlier than the park gate. Confirm the day’s hours at the relevant counter.' },
+    { q: 'Do rides run on public holidays?', a: 'Busy days are when activities are most likely staffed, but no fixed holiday schedule is published here. Expect queues and confirm hours on arrival.' },
+    { q: 'Can bad weather stop the rides?', a: 'Yes — individual activities can pause for weather, maintenance or low demand, independent of the gate. If a specific ride is your reason to visit, verify it is running before you build your plan around it.' },
+    { q: 'Do ride hours follow the park’s opening hours?', a: 'Not necessarily. Treat ride and activity hours as a separate question from gate hours on the opening hours page.' },
+  ]}
+  breadcrumb={[{ name: 'Home', href: '/' }, { name: 'Rides timings', href: '/rides-timings/' }]}
+  image="/images/rawal-lake-islamabad.jpg"
+  related={[
+    { label: 'Rides & attractions', href: '/rides-and-attractions/' },
+    { label: 'Opening hours', href: '/opening-hours/' },
+    { label: 'Boating', href: '/boating/' },
+    { label: 'Kids play areas', href: '/kids-play-areas/' },
+  ]}
+>
+  <article class="space-y-8">
+    <p class="text-lg leading-8 text-slate-700">Ride and activity timings are covered separately from the park’s general gate hours because they are often run by different operators and follow their own schedule.</p>
+
+    <section>
+      <h2 class="text-2xl font-black text-[#143844]">Not the same as the gate</h2>
+      <p class="mt-3 leading-8">A ride or stall may open later, close earlier, or pause for breaks, independent of when the park gate is accessible. If a specific activity is your main reason to visit, treat its hours as a separate question.</p>
+    </section>
+
+    <section>
+      <h2 class="text-2xl font-black text-[#143844]">Weather effects</h2>
+      <p class="mt-3 leading-8">Boating and exposed rides are sensitive to wind, rain and thunderstorms. Operators can suspend them for safety even when the park gate stays open. Check conditions via <a class="font-semibold text-[#a66f2d] underline" href="/#weather">the park weather guidance</a> before you go.</p>
+    </section>
+
+    <section>
+      <h2 class="text-2xl font-black text-[#143844]">Weekends and holidays</h2>
+      <p class="mt-3 leading-8">Busier days mean longer queues, not necessarily longer hours. Arriving earlier improves both availability and comfort for children’s activities.</p>
+    </section>
+
+    <section>
+      <h2 class="text-2xl font-black text-[#143844]">How to confirm</h2>
+      <p class="mt-3 leading-8">Ask the operator or on-site management for the day’s opening, last ride time and any price. This guide does not publish a fixed rides timetable because it is not verified.</p>
+    </section>
+
+    <div class="rounded-2xl border-l-4 border-[#b3261e] bg-[#fdecea] p-5">
+      <p class="text-sm font-black text-[#b3261e]">Don’t assume it’s running</p>
+      <p class="mt-2 text-sm leading-7 text-[#7a1c16]">Even on an open day, a particular ride or boat service can be closed for maintenance or weather. Confirm the specific activity you came for.</p>
+    </div>
+
+    <section>
+      <h2 class="text-2xl font-black text-[#143844]">Best time of day to try activities</h2>
+      <p class="mt-3 leading-8">In Islamabad’s heat, mornings and the late-afternoon-to-sunset window are the most comfortable times to be outside, and they are also when queues tend to be shorter. Midday in summer is best spent in shade or back in the car — another reason to confirm activity hours rather than assume a midday slot.</p>
+    </section>
+
+    <Checklist items={[
+      'Treat ride hours as separate from the park gate hours.',
+      'Confirm each activity’s hours at its own counter on arrival.',
+      'Go earlier in the day to avoid the hottest hours and longest queues.',
+      'Have a fallback (lake walk, picnic) if a ride is paused.',
+      'Keep cash for on-site counters that may not take cards.',
+    ]} />
+
+    <figure>
+      <img src="/images/rawal-lake-islamabad.jpg" width="1280" height="960" alt="Calm Rawal Lake view from Lake View Park, Islamabad" class="h-[360px] w-full rounded-[2rem] object-cover card-shadow" loading="lazy" />
+      <figcaption><PhotoCredit photo={2} /></figcaption>
+    </figure>
+  </article>
+</SubpageLayout>

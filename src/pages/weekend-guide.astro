@@ -1,0 +1,65 @@
+---
+import SubpageLayout from '../layouts/SubpageLayout.astro';
+import Checklist from '../components/Checklist.astro';
+import PhotoCredit from '../components/PhotoCredit.astro';
+---
+<SubpageLayout
+  title="Lake View Park Islamabad Weekend Guide"
+  description="Lake View Park Islamabad weekend guide: what to expect when it is busy, how to arrive early, parking and confirming activities."
+  path="/weekend-guide/"
+  faq={[
+    { q: 'When is Lake View Park busiest?', a: 'Late mornings through early evening on weekends and public holidays fill the lawns, car parks and activity queues. Arriving earlier beats both traffic and a full car park.' },
+    { q: 'Should I arrive early on weekends?', a: 'Yes — mid-morning arrivals mean shorter queues for children’s activities and cooler walking before the day heats up, plus a better chance of a parking space.' },
+    { q: 'Are rides and boating running on weekends?', a: 'Not guaranteed. They can pause for queues, weather or maintenance, so confirm on-site rather than assuming, and pair the visit with the lake and lawns as the reliable core.' },
+    { q: 'Is there a quieter alternative?', a: 'Weekday mornings and early afternoons are noticeably quieter if your schedule allows, trading a little convenience for much more space.' },
+  ]}
+  breadcrumb={[{ name: 'Home', href: '/' }, { name: 'Weekend guide', href: '/weekend-guide/' }]}
+  image="/images/rawal-lake-islamabad-view.jpg"
+  related={[
+    { label: 'Best time to visit', href: '/best-time-to-visit/' },
+    { label: 'Parking', href: '/parking/' },
+    { label: 'Rides timings', href: '/rides-timings/' },
+    { label: 'Family guide', href: '/family-guide/' },
+  ]}
+>
+  <article class="space-y-8">
+    <p class="text-lg leading-8 text-slate-700">Weekends and public holidays are the busiest times at Lake View Park. A little timing and expectation management make them enjoyable rather than frustrating.</p>
+
+    <section>
+      <h2 class="text-2xl font-black text-[#143844]">Expect crowds</h2>
+      <p class="mt-3 leading-8">Late mornings through early evening fill the lawns, car parks and activity queues. The lake and open space still offer room if you arrive earlier.</p>
+    </section>
+
+    <section>
+      <h2 class="text-2xl font-black text-[#143844]">Arrive early</h2>
+      <p class="mt-3 leading-8">Mid-morning arrivals beat both traffic and a full car park. Earlier also means shorter queues for children’s activities and cooler walking before the day heats up.</p>
+    </section>
+
+    <section>
+      <h2 class="text-2xl font-black text-[#143844]">Parking and activities</h2>
+      <p class="mt-3 leading-8">Confirm the current parking tariff and open lot on arrival (see <a class="font-semibold text-[#a66f2d] underline" href="/parking/">parking</a>). Rides and boating can pause for queues, weather or maintenance — confirm on-site rather than assuming (see <a class="font-semibold text-[#a66f2d] underline" href="/rides-timings/">rides timings</a>).</p>
+    </section>
+
+    <section>
+      <h2 class="text-2xl font-black text-[#143844]">If you prefer calm</h2>
+      <p class="mt-3 leading-8">Weekday mornings and early afternoons are noticeably quieter. If your schedule allows, a non-weekend visit trades a little convenience for a lot more space.</p>
+    </section>
+
+    <section>
+      <h2 class="text-2xl font-black text-[#143844]">Plan for the crowd</h2>
+      <p class="mt-3 leading-8">Weekends reward early arrivals and flexible expectations. Use the lake and open lawns as your reliable base, keep children’s activities as a bonus to confirm, and don’t let a queue define the day.</p>
+    </section>
+
+    <Checklist title="Weekend visit checklist" items={[
+      'Arrive mid-morning to beat traffic and a full car park.',
+      'Confirm the parking tariff and open lot on arrival.',
+      'Confirm rides or boating on-site rather than assuming.',
+      'Consider a weekday if you want more space and calm.',
+    ]} />
+
+    <figure>
+      <img src="/images/rawal-lake-islamabad-view.jpg" width="1440" height="960" alt="Lakeside structure at Rawal Lake near Lake View Park, Islamabad" class="h-[360px] w-full rounded-[2rem] object-cover card-shadow" loading="lazy" />
+      <figcaption><PhotoCredit photo={3} /></figcaption>
+    </figure>
+  </article>
+</SubpageLayout>

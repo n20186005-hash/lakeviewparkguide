@@ -1,0 +1,75 @@
+---
+import SubpageLayout from '../layouts/SubpageLayout.astro';
+import Checklist from '../components/Checklist.astro';
+import PhotoCredit from '../components/PhotoCredit.astro';
+---
+<SubpageLayout
+  title="Family Day Trip to Lake View Park"
+  description="Family day trip to Lake View Park Islamabad: a full-day plan with kids’ activities, picnic, lake time and return transport tips."
+  path="/family-day-trip/"
+  faq={[
+    { q: 'Is Lake View Park good for a full family day?', a: 'Yes — lake time, a children’s play area and a relaxed picnic suit families. Build the day around the lake, lawns and play, which need no booking, and treat boating or rides as confirm-on-site extras.' },
+    { q: 'What should we pack for kids?', a: 'Water, sun protection and a change of clothes for kids; a mat and your own snacks since on-site stalls aren’t guaranteed open; and a rubbish bag to keep the lawns clean.' },
+    { q: 'How do we handle the return trip?', a: 'Ride-hail supply can thin out in the evening, so book your return while you have signal and note sunset time if you stay late.' },
+    { q: 'Do we need to confirm anything on arrival?', a: 'Confirm gate hours, parking and any charges, and check whether boating or the play area is operating that day before relying on them.' },
+  ]}
+  breadcrumb={[{ name: 'Home', href: '/' }, { name: 'Family day trip', href: '/family-day-trip/' }]}
+  image="/images/rawal-lake-islamabad-view.jpg"
+  related={[
+    { label: 'Family guide', href: '/family-guide/' },
+    { label: 'Half-day itinerary', href: '/half-day-itinerary/' },
+    { label: 'Kids play areas', href: '/kids-play-areas/' },
+    { label: 'Taxi & ride-hailing', href: '/taxi-ride-hailing/' },
+  ]}
+>
+  <article class="space-y-8">
+    <p class="text-lg leading-8 text-slate-700">A full day at Lake View Park works well for families who want lake time, play and a relaxed picnic without cramming.</p>
+
+    <section>
+      <h2 class="text-2xl font-black text-[#143844]">The day</h2>
+      <ol class="mt-3 list-decimal space-y-2 pl-5 leading-8">
+        <li>Morning arrival; settle in with a lakeside walk.</li>
+        <li>Children’s play area and, if open, a boating look — confirm on-site.</li>
+        <li>Picnic or on-site food for lunch; rest in the shade.</li>
+        <li>Afternoon walk, photos and a second play burst.</li>
+        <li>Plan the return before the park quiets, especially after sunset.</li>
+      </ol>
+    </section>
+
+    <section>
+      <h2 class="text-2xl font-black text-[#143844]">What to pack</h2>
+      <ul class="mt-3 list-disc space-y-2 pl-5 leading-8">
+        <li>Water, sun protection and a change of clothes for kids.</li>
+        <li>A mat and your own snacks; on-site stalls aren’t guaranteed open.</li>
+        <li>A bag for rubbish to keep the lawns clean.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2 class="text-2xl font-black text-[#143844]">Return transport</h2>
+      <p class="mt-3 leading-8">Ride-hail supply can thin out in the evening. Book your return while you have signal (see the <a class="font-semibold text-[#a66f2d] underline" href="/taxi-ride-hailing/">taxi & ride-hailing guide</a>), and note sunset time if you stay late.</p>
+    </section>
+
+    <div class="rounded-2xl bg-[#f3ede0] p-5">
+      <p class="text-sm font-black text-[#5b4a2f]">Keep it flexible</p>
+      <p class="mt-2 text-sm leading-7 text-[#5b4a2f]">Lead with the lake, lawns and picnic — none need a booking. Treat boating and rides as confirm-on-site extras so a closure doesn’t spoil the day.</p>
+    </div>
+
+    <section>
+      <h2 class="text-2xl font-black text-[#143844]">Build the day around play and rest</h2>
+      <p class="mt-3 leading-8">A full family day flows best when you don’t depend on a single paid activity. Lead with the lake, lawns and picnic, keep the timing loose for naps and queues, and confirm boating or rides only if your children want them.</p>
+    </section>
+
+    <Checklist title="Family day-trip checklist" items={[
+      'Confirm gate hours, parking and any charges on arrival.',
+      'Pack water, sun protection and a kids’ change of clothes.',
+      'Bring a mat, snacks and a rubbish bag.',
+      'Book your return ride before the park quiets.',
+    ]} />
+
+    <figure>
+      <img src="/images/rawal-lake-islamabad-view.jpg" width="1440" height="960" alt="Lakeside structure at Rawal Lake near Lake View Park, Islamabad" class="h-[360px] w-full rounded-[2rem] object-cover card-shadow" loading="lazy" />
+      <figcaption><PhotoCredit photo={3} /></figcaption>
+    </figure>
+  </article>
+</SubpageLayout>

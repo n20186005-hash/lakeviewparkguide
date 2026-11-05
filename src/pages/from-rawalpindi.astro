@@ -1,0 +1,70 @@
+---
+import SubpageLayout from '../layouts/SubpageLayout.astro';
+import Checklist from '../components/Checklist.astro';
+import { park } from '../data/park';
+import PhotoCredit from '../components/PhotoCredit.astro';
+---
+<SubpageLayout
+  title="How to Reach Lake View Park from Rawalpindi"
+  description="How to reach Lake View Park from Rawalpindi: route via the Islamabad Expressway and Murree Road, editorial time estimates and practical notes."
+  path="/from-rawalpindi/"
+  faq={[
+    { q: 'How long does it take from Rawalpindi to Lake View Park?', a: 'The journey is often 30–50 minutes via the Islamabad Expressway and Murree Road, longer at peak hours and weekends. These are editorial estimates, not a measured time — verify the live route in your map app.' },
+    { q: 'What is the route from Rawalpindi?', a: 'Take the Islamabad Expressway toward Islamabad, continue to Murree Road and the Rawal Dam / Lake View Park signs, then use the Plus Code to reach the park.' },
+    { q: 'Can I use public transport from Rawalpindi?', a: 'Possibly for part of the way — plan the final stretch with CDA’s transit map and possibly a short ride-hail, since this guide hasn’t verified a direct service to the gate.' },
+    { q: 'How do I plan the return?', a: 'Arrange your return before the park quiets in the evening, when ride-hail supply can thin out.' },
+  ]}
+  breadcrumb={[{ name: 'Home', href: '/' }, { name: 'From Rawalpindi', href: '/from-rawalpindi/' }]}
+  image="/images/rawal-lake-islamabad.jpg"
+  related={[
+    { label: 'How to get there', href: '/how-to-get-there/' },
+    { label: 'From central Islamabad', href: '/from-islamabad-city/' },
+    { label: 'Public transport', href: '/public-transport/' },
+    { label: 'Parking', href: '/parking/' },
+  ]}
+>
+  <article class="space-y-8">
+    <p class="text-lg leading-8 text-slate-700">For travellers coming from Rawalpindi, the usual approach is through Islamabad and then along Murree Road to the lake. Times below are <strong>editorial estimates</strong>; confirm the live route in your map app.</p>
+
+    <section>
+      <h2 class="text-2xl font-black text-[#143844]">Route overview</h2>
+      <p class="mt-3 leading-8">From Rawalpindi, take the <strong>Islamabad Expressway</strong> toward Islamabad, then continue to Murree Road and the Rawal Dam / Lake View Park signs. The journey is often 30–50 minutes, longer at peak hours and on weekends.</p>
+    </section>
+
+    <section>
+      <h2 class="text-2xl font-black text-[#143844]">Navigating near the lake</h2>
+      <p class="mt-3 leading-8">Once you are close, paste the Plus Code <code class="rounded bg-slate-100 px-1">{park.plusCode}</code> into your map app to reach the park rather than guessing a street number. Confirm the open gate and drop-off with on-site management.</p>
+    </section>
+
+    <section>
+      <h2 class="text-2xl font-black text-[#143844]">Tips</h2>
+      <ul class="mt-3 list-disc space-y-2 pl-5 leading-8">
+        <li>Build in buffer for Expressway traffic, especially in the morning and evening peaks.</li>
+        <li>If using public transport, plan the final stretch with CDA’s transit map and possibly a short ride-hail.</li>
+        <li>Arrange your return before the park quiets in the evening.</li>
+      </ul>
+    </section>
+
+    <div class="rounded-2xl bg-[#f3ede0] p-5">
+      <p class="text-sm font-black text-[#5b4a2f]">Estimate, not a promise</p>
+      <p class="mt-2 text-sm leading-7 text-[#5b4a2f]">Roadworks, checkpoints and events can change this route. Verify the live path and current travel time in your map app on the day.</p>
+    </div>
+
+    <section>
+      <h2 class="text-2xl font-black text-[#143844]">Build in buffer</h2>
+      <p class="mt-3 leading-8">Roadworks, checkpoints and events can change this route on the day. Verify the live path and travel time in your map app, and don’t rely on a fixed schedule — the lake is the reliable destination once you arrive.</p>
+    </section>
+
+    <Checklist title="From Rawalpindi checklist" items={[
+      'Allow 30–50 minutes, more at peak hours.',
+      'Use the Islamabad Expressway then Murree Road.',
+      'Pin the Plus Code near the lake to reach the park.',
+      'Arrange your return before the park quiets.',
+    ]} />
+
+    <figure>
+      <img src="/images/rawal-lake-islamabad.jpg" width="1280" height="960" alt="Calm Rawal Lake view from Lake View Park, Islamabad" class="h-[360px] w-full rounded-[2rem] object-cover card-shadow" loading="lazy" />
+      <figcaption><PhotoCredit photo={2} /></figcaption>
+    </figure>
+  </article>
+</SubpageLayout>

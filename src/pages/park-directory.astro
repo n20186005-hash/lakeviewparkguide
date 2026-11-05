@@ -1,0 +1,86 @@
+---
+import SubpageLayout from '../layouts/SubpageLayout.astro';
+import PhotoCredit from '../components/PhotoCredit.astro';
+import Checklist from '../components/Checklist.astro';
+---
+<SubpageLayout
+  title="Lake View Park Islamabad Directory & Facilities"
+  description="Lake View Park Islamabad directory: lake viewpoints, kids play areas, walking paths, food, parking, restrooms and currently suspended facilities."
+  path="/park-directory/"
+  faq={[
+    { q: 'What is there to do at Lake View Park?', a: 'The defining feature is the open lakeside front along Rawal Lake, with walking paths and viewpoints, plus children’s play areas, open lawns for picnics, food stalls, parking and restrooms. A walk-in aviary is listed as currently non-functional by CDA’s Environmental Protection Cell.' },
+    { q: 'Is the aviary open?', a: 'CDA’s Environmental Protection Cell lists the walk-in aviary as presently non-functional. Do not plan an aviary visit unless CDA confirms a change on the aviary status page.' },
+    { q: 'Is there an exact facility map?', a: 'This guide does not publish a claimed-exact facility map because reliable in-park coordinates have not been verified. Use the official map link on the location page for navigation.' },
+    { q: 'Are the food stalls always open?', a: 'No. Which vendors are open, and their menus and prices, vary day to day. Confirm on the day rather than assuming a particular stall is there.' },
+  ]}
+  breadcrumb={[{ name: 'Home', href: '/' }, { name: 'Park directory', href: '/park-directory/' }]}
+  image="/images/rawal-lake-islamabad-view.jpg"
+  related={[
+    { label: 'Visitor facilities', href: '/visitor-facilities/' },
+    { label: 'Rides & attractions', href: '/rides-and-attractions/' },
+    { label: 'Aviary status', href: '/aviary-status/' },
+    { label: 'Ticket prices', href: '/ticket-prices/' },
+  ]}
+>
+  <article class="space-y-8">
+    <p class="text-lg leading-8 text-slate-700">A planning checklist of the areas and services Lake View Park is known for. It is a directory for expectation-setting, not a guarantee that every facility is operating on your visit — confirm individual items before you rely on them.</p>
+
+    <section>
+      <h2 class="text-2xl font-black text-[#143844]">Lake viewpoint areas</h2>
+      <p class="mt-3 leading-8">The defining feature is the open lakeside front along Rawal Lake, with walking paths and viewpoints. These are the most reliable reason to visit and need no separate ticket beyond park access.</p>
+    </section>
+
+    <section>
+      <h2 class="text-2xl font-black text-[#143844]">Children’s play areas</h2>
+      <p class="mt-3 leading-8">CDA’s destination description mentions children’s activities. Specific play equipment can be operated separately and may have its own charges and hours — see the <a class="font-semibold text-[#a66f2d] underline" href="/kids-play-areas/">kids play areas page</a>.</p>
+    </section>
+
+    <section>
+      <h2 class="text-2xl font-black text-[#143844]">Walking and leisure paths</h2>
+      <p class="mt-3 leading-8">Open lawns and lakeside walks suit casual strolls and picnics. Keep to marked paths and check conditions after rain, when stone steps and edges get slippery.</p>
+    </section>
+
+    <section>
+      <h2 class="text-2xl font-black text-[#143844]">Food and drink</h2>
+      <p class="mt-3 leading-8">CDA’s destination page describes local food stalls. Which vendors are open, and their menus and prices, change day to day — confirm on the day rather than assuming a particular stall is there.</p>
+    </section>
+
+    <section>
+      <h2 class="text-2xl font-black text-[#143844]">Parking</h2>
+      <p class="mt-3 leading-8">Parking is available and, per CDA’s 2023 decision, its fee collection is outsourced. Verify the current lot, access and tariff on arrival (see the <a class="font-semibold text-[#a66f2d] underline" href="/parking/">parking page</a>).</p>
+    </section>
+
+    <section>
+      <h2 class="text-2xl font-black text-[#143844]">Restrooms and seating</h2>
+      <p class="mt-3 leading-8">Ask management for the currently open restroom and its location; this guide has not verified an accessible toilet route. Seating and shade are provided in open lawn areas.</p>
+    </section>
+
+    <section>
+      <h2 class="text-2xl font-black text-[#143844]">Currently suspended facilities</h2>
+      <p class="mt-3 leading-8">CDA’s Environmental Protection Cell lists the walk-in <strong>aviary as presently non-functional</strong>. Do not plan an aviary visit unless CDA confirms a change (see the <a class="font-semibold text-[#a66f2d] underline" href="/aviary-status/">aviary status page</a>).</p>
+    </section>
+
+    <div class="rounded-2xl bg-[#f3ede0] p-5">
+      <p class="text-sm font-black text-[#5b4a2f]">No precise facility map</p>
+      <p class="mt-2 text-sm leading-7 text-[#5b4a2f]">This guide does not publish a claimed-exact facility map, because reliable in-park coordinates have not been verified. Use the official map link on the <a class="underline" href="/location-map/">location page</a> for navigation instead.</p>
+    </div>
+
+    <section>
+      <h2 class="text-2xl font-black text-[#143844]">Lakeside vs activity-focused visits</h2>
+      <p class="mt-3 leading-8">If you mainly want calm lake views and a walk, the open lakeside front along Rawal Lake is the reliable draw and needs no separate ticket beyond park access. If you want rides, boating or specific play equipment, those are operator-dependent and can pause for weather or maintenance — confirm them before you build your plan around them.</p>
+    </section>
+
+    <Checklist items={[
+      'Set expectations from this directory, then confirm individual facilities on arrival.',
+      'Don’t plan around the aviary until CDA confirms it is functional.',
+      'For picnics, bring a mat and your own supplies as on-site availability isn’t guaranteed.',
+      'Use the official map link on the location page rather than a claimed-exact facility map.',
+      'Ask management for the currently open restroom and its route.',
+    ]} />
+
+    <figure>
+      <img src="/images/rawal-lake-islamabad-view.jpg" width="1440" height="960" alt="Lakeside structure at Rawal Lake near Lake View Park, Islamabad" class="h-[360px] w-full rounded-[2rem] object-cover card-shadow" loading="lazy" />
+      <figcaption><PhotoCredit photo={3} /></figcaption>
+    </figure>
+  </article>
+</SubpageLayout>

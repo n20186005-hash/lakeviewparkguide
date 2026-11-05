@@ -1,0 +1,69 @@
+---
+import SubpageLayout from '../layouts/SubpageLayout.astro';
+import Checklist from '../components/Checklist.astro';
+import PhotoCredit from '../components/PhotoCredit.astro';
+---
+<SubpageLayout
+  title="Picnic at Lake View Park Islamabad"
+  description="Picnic at Lake View Park Islamabad: where to sit, what to bring, on-site food, litter rules and weather tips for a relaxed day out."
+  path="/picnic-guide/"
+  faq={[
+    { q: 'Can I picnic at Lake View Park?', a: 'Yes — the open lawns and lakeside edge make it a natural picnic spot. Pick a lawn area away from the busiest entrances for more space and shade options.' },
+    { q: 'What should I bring for a picnic?', a: 'Water and sun protection for strong midday heat, your own snacks or a meal since on-site stalls aren’t guaranteed open, and a bag for rubbish to leave the lawn clean.' },
+    { q: 'Are there food stalls at the park?', a: 'CDA’s destination page describes local food stalls and tea shops, but which are open varies by day. Bring your own supplies so you aren’t relying on them.' },
+    { q: 'What are the litter rules?', a: 'Follow CDA rules on litter and plastics, use the bins provided, and keep the lawns clean for everyone. After rain, grass and edges get slippery, so choose a firm spot.' },
+  ]}
+  breadcrumb={[{ name: 'Home', href: '/' }, { name: 'Picnic guide', href: '/picnic-guide/' }]}
+  image="/images/lake-view-park-rawal-lake.jpg"
+  related={[
+    { label: 'Family guide', href: '/family-guide/' },
+    { label: 'Visitor facilities', href: '/visitor-facilities/' },
+    { label: 'Best time to visit', href: '/best-time-to-visit/' },
+    { label: 'Visitor rules', href: '/visitor-rules/' },
+  ]}
+>
+  <article class="space-y-8">
+    <p class="text-lg leading-8 text-slate-700">The open lawns and lakeside edge make Lake View Park a natural picnic spot. A little planning keeps it relaxed and clean.</p>
+
+    <section>
+      <h2 class="text-2xl font-black text-[#143844]">Where to set up</h2>
+      <p class="mt-3 leading-8">Open lawn areas away from the busiest entrances give more space and shade options. A light mat or blanket is common; avoid blocking paths or restricted areas near the water.</p>
+    </section>
+
+    <section>
+      <h2 class="text-2xl font-black text-[#143844]">What to bring</h2>
+      <ul class="mt-3 list-disc space-y-2 pl-5 leading-8">
+        <li>Water and sun protection — midday summer heat is strong.</li>
+        <li>Your own snacks or a meal; on-site stalls are not guaranteed open.</li>
+        <li>A bag for your rubbish so you leave the lawn as you found it.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2 class="text-2xl font-black text-[#143844]">On-site food and rules</h2>
+      <p class="mt-3 leading-8">CDA’s destination page describes local food stalls and tea shops, but which are open varies by day. Follow CDA rules on litter and plastics, use the bins, and keep the lawns clean for everyone (see <a class="font-semibold text-[#a66f2d] underline" href="/visitor-rules/">rules & safety</a>).</p>
+    </section>
+
+    <section>
+      <h2 class="text-2xl font-black text-[#143844]">Weather</h2>
+      <p class="mt-3 leading-8">Check <a class="font-semibold text-[#a66f2d] underline" href="/#weather">the park weather guidance</a> before you pack. After rain, grass and edges get slippery, and thunderstorms mean packing up early.</p>
+    </section>
+
+    <section>
+      <h2 class="text-2xl font-black text-[#143844]">Picnic smart</h2>
+      <p class="mt-3 leading-8">The simplest picnic is the most reliable: your own food, a mat, and a commitment to leave the lawn as you found it. Lean on the open space rather than on stalls being open, and check the weather before you pack.</p>
+    </section>
+
+    <Checklist title="Picnic checklist" items={[
+      'Pick a lawn away from the busiest entrances for space and shade.',
+      'Bring water, sun protection and your own food.',
+      'Carry a rubbish bag and use the bins.',
+      'After rain, choose a firm, non-slippery spot.',
+    ]} />
+
+    <figure>
+      <img src="/images/lake-view-park-rawal-lake.jpg" width="1280" height="960" alt="Lake View Park lakeshore along Rawal Lake, Islamabad" class="h-[360px] w-full rounded-[2rem] object-cover card-shadow" loading="lazy" />
+      <figcaption><PhotoCredit photo={1} /></figcaption>
+    </figure>
+  </article>
+</SubpageLayout>

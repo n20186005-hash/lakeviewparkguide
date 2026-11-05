@@ -1,0 +1,74 @@
+---
+import SubpageLayout from '../layouts/SubpageLayout.astro';
+import Checklist from '../components/Checklist.astro';
+import PhotoCredit from '../components/PhotoCredit.astro';
+---
+<SubpageLayout
+  title="Lake View Park Accessibility & Mobility Guide"
+  description="Lake View Park accessibility and mobility: what is known about paths, restrooms and parking, and what this guide has left unverified."
+  path="/accessibility/"
+  faq={[
+    { q: 'Is Lake View Park wheelchair accessible?', a: 'This guide has not verified step-free routes, gradient, width or repairs. Ask management for the most suitable gate and route before you travel if mobility is a concern — don’t assume from photos.' },
+    { q: 'Are there accessible restrooms?', a: 'An accessible toilet route has not been verified. Ask management on arrival for the currently open restroom and the best approach.' },
+    { q: 'Is parking close to a flat route?', a: 'Parking is available with an outsourced fee, and open lawns offer seating and shade, but the proximity of a lot to a flat, shaded route is worth confirming on-site.' },
+    { q: 'What practical steps help?', a: 'Call or ask management about the best gate and route, travel with a companion if you may need help on uneven ground, and visit at a quieter weekday morning to reduce distance and crowding.' },
+  ]}
+  breadcrumb={[{ name: 'Home', href: '/' }, { name: 'Accessibility', href: '/accessibility/' }]}
+  image="/images/rawal-lake-islamabad.jpg"
+  related={[
+    { label: 'Visitor facilities', href: '/visitor-facilities/' },
+    { label: 'Parking', href: '/parking/' },
+    { label: 'Family guide', href: '/family-guide/' },
+    { label: 'Best time to visit', href: '/best-time-to-visit/' },
+  ]}
+>
+  <article class="space-y-8">
+    <p class="text-lg leading-8 text-slate-700">This page is honest about what is <strong>not</strong> verified. Accessibility can only be confirmed by visiting or asking management — never assume from photos.</p>
+
+    <section>
+      <h2 class="text-2xl font-black text-[#143844]">Paths and slopes — unverified</h2>
+      <p class="mt-3 leading-8">The park has open lawns and lakeside paths, but this guide has <strong>not</strong> verified step-free routes, gradient, width or current repairs. Confirm the chosen gate-to-path route with management before travelling if mobility is a concern.</p>
+    </section>
+
+    <section>
+      <h2 class="text-2xl font-black text-[#143844]">Restrooms — unverified</h2>
+      <p class="mt-3 leading-8">An accessible toilet route has not been verified by this guide. Ask management for the currently open restroom and the most suitable approach on arrival.</p>
+    </section>
+
+    <section>
+      <h2 class="text-2xl font-black text-[#143844]">Seating, shade and parking</h2>
+      <p class="mt-3 leading-8">Seating and shade exist in open lawn areas; parking is available with an outsourced fee (see <a class="font-semibold text-[#a66f2d] underline" href="/parking/">parking</a>). Proximity of a parking lot to a flat, shaded route is worth confirming on-site.</p>
+    </section>
+
+    <section>
+      <h2 class="text-2xl font-black text-[#143844]">Practical steps</h2>
+      <ul class="mt-3 list-disc space-y-2 pl-5 leading-8">
+        <li>Call or ask management about the most suitable gate and route before you go.</li>
+        <li>Travel with a companion if you may need assistance on uneven ground.</li>
+        <li>Visit at a quieter time (weekday morning) to reduce distance and crowding.</li>
+      </ul>
+    </section>
+
+    <div class="rounded-2xl border-l-4 border-[#b3261e] bg-[#fdecea] p-5">
+      <p class="text-sm font-black text-[#b3261e]">Do not infer accessibility from photos</p>
+      <p class="mt-2 text-sm leading-7 text-[#7a1c16]">A pleasant lakeside photo does not prove a step-free, wheelchair-suitable route. Treat any accessibility claim here as “ask management,” not a guarantee.</p>
+    </div>
+
+    <section>
+      <h2 class="text-2xl font-black text-[#143844]">Confirm, don’t assume</h2>
+      <p class="mt-3 leading-8">Accessibility at Lake View Park can only be confirmed by visiting or asking management. Treat every claim here as “ask management,” keep the route short and on firm ground, and pair the visit with the open lawns as a flexible base.</p>
+    </section>
+
+    <Checklist title="Accessibility day-of checklist" items={[
+      'Ask management for the most suitable gate and route.',
+      'Confirm the open restroom and its approach on arrival.',
+      'Travel with a companion if uneven ground is a concern.',
+      'Visit on a weekday morning for less distance and crowding.',
+    ]} />
+
+    <figure>
+      <img src="/images/rawal-lake-islamabad.jpg" width="1280" height="960" alt="Calm Rawal Lake view from Lake View Park, Islamabad" class="h-[360px] w-full rounded-[2rem] object-cover card-shadow" loading="lazy" />
+      <figcaption><PhotoCredit photo={2} /></figcaption>
+    </figure>
+  </article>
+</SubpageLayout>

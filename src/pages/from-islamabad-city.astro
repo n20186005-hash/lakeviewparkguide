@@ -1,0 +1,70 @@
+---
+import SubpageLayout from '../layouts/SubpageLayout.astro';
+import Checklist from '../components/Checklist.astro';
+import { park } from '../data/park';
+import PhotoCredit from '../components/PhotoCredit.astro';
+---
+<SubpageLayout
+  title="Getting to Lake View Park from Central Islamabad"
+  description="Getting to Lake View Park from central Islamabad: a realistic route via Murree Road, editorial time estimates and practical notes — not an official timetable."
+  path="/from-islamabad-city/"
+  faq={[
+    { q: 'How long from central Islamabad to Lake View Park?', a: 'Usually 20–40 minutes depending on traffic and your start point, more at peak hours. These are editorial estimates, not measured directions — verify the live route in your map app.' },
+    { q: 'What is the route from central Islamabad?', a: 'Head toward Rawal Dam and then along Murree Road to the Lake View Park signs; use the Plus Code once near the lake to keep navigation simple.' },
+    { q: 'Should I drive or use a ride?', a: 'Both work — driving means parking (confirm the outsourced fee on arrival), while a ride-hail removes the parking question but needs booking for the return as supply thins in the evening.' },
+    { q: 'How do I avoid traffic and a full car park?', a: 'Prefer late morning on weekends to beat both traffic and the car park filling up, and confirm the open gate and drop-off with on-site management on arrival.' },
+  ]}
+  breadcrumb={[{ name: 'Home', href: '/' }, { name: 'From central Islamabad', href: '/from-islamabad-city/' }]}
+  image="/images/rawal-lake-islamabad-view.jpg"
+  related={[
+    { label: 'How to get there', href: '/how-to-get-there/' },
+    { label: 'Public transport', href: '/public-transport/' },
+    { label: 'Parking', href: '/parking/' },
+    { label: 'Location & map', href: '/location-map/' },
+  ]}
+>
+  <article class="space-y-8">
+    <p class="text-lg leading-8 text-slate-700">A practical route summary for travellers starting in central Islamabad (the Blue Area, F‑/G‑sectors and nearby). Distances and times below are <strong>editorial estimates</strong>, not measured directions — confirm with your map app on the day.</p>
+
+    <section>
+      <h2 class="text-2xl font-black text-[#143844]">Route overview</h2>
+      <p class="mt-3 leading-8">From central Islamabad, head toward Rawal Dam and then along <strong>Murree Road</strong> to the Lake View Park signs. The drive is usually 20–40 minutes depending on traffic and your exact start point; allow more at peak hours.</p>
+    </section>
+
+    <section>
+      <h2 class="text-2xl font-black text-[#143844]">Landmarks en route</h2>
+      <p class="mt-3 leading-8">The route passes through the city’s main sectors before reaching the Rawal Dam / lake corridor. Using the Plus Code <code class="rounded bg-slate-100 px-1">{park.plusCode}</code> keeps navigation simple once you are near the lake.</p>
+    </section>
+
+    <section>
+      <h2 class="text-2xl font-black text-[#143844]">Tips</h2>
+      <ul class="mt-3 list-disc space-y-2 pl-5 leading-8">
+        <li>Set the destination to “Lake View Park” or paste the Plus Code before you leave.</li>
+        <li>Prefer late morning on weekends to beat both traffic and the car park filling up.</li>
+        <li>Confirm the open gate and drop-off with on-site management on arrival.</li>
+      </ul>
+    </section>
+
+    <div class="rounded-2xl bg-[#f3ede0] p-5">
+      <p class="text-sm font-black text-[#5b4a2f]">Estimate, not a promise</p>
+      <p class="mt-2 text-sm leading-7 text-[#5b4a2f]">Traffic, roadworks and events change journey times. Treat the figures above as planning guidance, and verify the live route in your map app.</p>
+    </div>
+
+    <section>
+      <h2 class="text-2xl font-black text-[#143844]">Keep it flexible</h2>
+      <p class="mt-3 leading-8">Traffic, roadworks and events change journey times, so treat the figures as planning guidance. Confirm the live route in your map app, and once at the lake, build the plan around the water and lawns that don’t need booking.</p>
+    </section>
+
+    <Checklist title="From central Islamabad checklist" items={[
+      'Set “Lake View Park” or the Plus Code before you leave.',
+      'Allow 20–40 minutes, more at peak hours.',
+      'Prefer late morning on weekends for space and traffic.',
+      'Confirm the open gate and drop-off on arrival.',
+    ]} />
+
+    <figure>
+      <img src="/images/rawal-lake-islamabad-view.jpg" width="1440" height="960" alt="Lakeside structure at Rawal Lake near Lake View Park, Islamabad" class="h-[360px] w-full rounded-[2rem] object-cover card-shadow" loading="lazy" />
+      <figcaption><PhotoCredit photo={3} /></figcaption>
+    </figure>
+  </article>
+</SubpageLayout>
